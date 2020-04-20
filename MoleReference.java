@@ -17,7 +17,7 @@ public class MoleReference implements Runnable {
     @Override public void run() {
         JFrame.setDefaultLookAndFeelDecorated(true);
 
-        JFrame frame = new JFrame("ExampleMole");
+        JFrame frame = new JFrame("Mole");
         frame.setPreferredSize(new Dimension(500, 500));
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -25,7 +25,7 @@ public class MoleReference implements Runnable {
         panel = new JPanel() {
             @Override public void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                // Draw mole here
+                
                 // Body
                 g.setColor(new Color(160, 82, 45));
                 g.fillOval(100, 100, MOLE, MOLE + 100); // Change x&y later
