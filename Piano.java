@@ -95,7 +95,45 @@ public class Piano extends KeyAdapter implements Runnable {
     }
     
     @Override public void keyReleased(KeyEvent ke) {
+        // Natural Keys
+        if (ke.getKeyCode() == KeyEvent.VK_Z) {
+            c = false; nat1.set(0, c); panel.repaint();
+        }
+        if (ke.getKeyCode() == KeyEvent.VK_X) {
+            d = false; nat1.set(1, d); panel.repaint();
+        }
+        if (ke.getKeyCode() == KeyEvent.VK_C) {
+            e = false; nat1.set(2, e); panel.repaint();
+        }
+        if (ke.getKeyCode() == KeyEvent.VK_V) {
+            f = false; nat1.set(3, f); panel.repaint();
+        }
+        if (ke.getKeyCode() == KeyEvent.VK_B) {
+            g = false; nat2.set(0, g); panel.repaint();
+        }
+        if (ke.getKeyCode() == KeyEvent.VK_N) {
+            a = false; nat2.set(1, a); panel.repaint();
+        }
+        if (ke.getKeyCode() == KeyEvent.VK_M) {
+            b = false; nat2.set(2, b); panel.repaint();
+        }                
         
+        // Sharp keys
+        if (ke.getKeyCode() == KeyEvent.VK_S) {
+            csharp = false; sharps1.set(0, csharp); panel.repaint();
+        }
+        if (ke.getKeyCode() == KeyEvent.VK_D) {
+            dsharp = false; sharps1.set(1, dsharp); panel.repaint();
+        }
+        if (ke.getKeyCode() == KeyEvent.VK_G) {
+            fsharp = false; sharps2.set(0, fsharp); panel.repaint();
+        }
+        if (ke.getKeyCode() == KeyEvent.VK_H) {
+            gsharp = false; sharps2.set(1, gsharp); panel.repaint();
+        }
+        if (ke.getKeyCode() == KeyEvent.VK_J) {
+            asharp = false; sharps2.set(2, asharp); panel.repaint();
+        }
     }
     
     public static void main(String[] args) {
