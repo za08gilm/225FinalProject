@@ -17,7 +17,7 @@ import javax.sound.sampled.*;
  * @author (your name)
  * @version (a version number or a date)
  */
-public class Piano extends KeyAdapter implements Runnable {
+public class Piano extends KeyAdapter implements Runnable, ActionListener {
     
     /** Static variables */
     private static final int STARTX_NATURAL = 25;
@@ -50,7 +50,7 @@ public class Piano extends KeyAdapter implements Runnable {
     @Override public void run() {
         JFrame.setDefaultLookAndFeelDecorated(true);
         JFrame frame = new JFrame("Piano");
-        frame.setPreferredSize(new Dimension(700,500));
+        frame.setPreferredSize(new Dimension(600,450));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         nat1 = new java.util.ArrayList(); sharps1 = new java.util.ArrayList();
@@ -175,6 +175,8 @@ public class Piano extends KeyAdapter implements Runnable {
 
         frame.add(panel);
         frame.addKeyListener(this);
+        //frame.addActionListener(this);
+        frame.setFocusable(true);
         frame.pack();
         frame.setVisible(true);
     }
@@ -261,6 +263,10 @@ public class Piano extends KeyAdapter implements Runnable {
         if (ke.getKeyCode() == KeyEvent.VK_J) {
             asharp = false; sharps2.set(2, asharp); panel.repaint();
         }
+    }
+    
+    @Override public void actionPerformed(ActionEvent ae) {
+        
     }
     
     public static void main(String[] args) {
