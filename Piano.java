@@ -38,7 +38,7 @@ public class Piano extends KeyAdapter implements Runnable {
     private boolean csharp, dsharp, fsharp, gsharp, asharp = false;
     private int xNatural, yNatural, xSharp, ySharp;
     private java.util.List<Boolean> nat1, nat2, sharps1, sharps2;
-    private JComboBox octives;
+    private JComboBox octaves;
     
     /** Arrays to store note Strrings and keys to press. */
     private String[] notes = {" C ", " D ", " E ", " F ", " G ", " A ", " B ",
@@ -50,7 +50,7 @@ public class Piano extends KeyAdapter implements Runnable {
     
     @Override public void run() {
         JFrame.setDefaultLookAndFeelDecorated(true);
-        JFrame frame = new JFrame("Mini Piano");
+        JFrame frame = new JFrame("Piano");
         frame.setPreferredSize(new Dimension(700,500));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -163,6 +163,13 @@ public class Piano extends KeyAdapter implements Runnable {
                 panel.repaint();
             }
         };
+        
+        octaves = new JComboBox();
+        octaves.addItem("1"); octaves.addItem("2"); octaves.addItem("3");
+        octaves.addItem("4"); octaves.addItem("5"); octaves.addItem("6");
+        octaves.addItem("7");
+        
+        panel.add(octaves);
 
         frame.add(panel);
         frame.addKeyListener(this);
