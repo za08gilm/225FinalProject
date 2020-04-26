@@ -10,7 +10,8 @@ import java.io.File;
 import java.io.IOException;
 
 // Imports for sound.
-import javax.sound.sampled.*;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.Clip;
 /**
  * Write a description of class Piano here.
  *
