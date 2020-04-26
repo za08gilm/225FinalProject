@@ -49,7 +49,125 @@ public class Piano extends KeyAdapter implements Runnable {
 
     
     @Override public void run() {
+        JFrame.setDefaultLookAndFeelDecorated(true);
+        JFrame frame = new JFrame("Mini Piano");
+        frame.setPreferredSize(new Dimension(700,500));
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        nat1 = new java.util.ArrayList(); sharps1 = new java.util.ArrayList();
+        nat2 = new java.util.ArrayList(); sharps2 = new java.util.ArrayList();
         
+        nat1.add(c); nat1.add(d); nat1.add(e); nat1.add(f); 
+        nat2.add(g); nat2.add(a); nat2.add(b);
+        sharps1.add(csharp); sharps1.add(dsharp);
+        sharps2.add(fsharp); sharps2.add(gsharp); sharps2.add(asharp);
+        
+        panel = new JPanel() {
+            @Override public void paintComponent(Graphics g) {
+                super.paintComponent(g);
+
+                xNatural = STARTX_NATURAL; yNatural = STARTY_NATURAL;
+                xSharp = STARTX_SHARP; ySharp = STARTY_SHARP;
+                int i = 0;
+
+                // Check the natural keys.
+                for (Boolean b : nat1) {
+                    if (b == true) {
+                        g.setColor(PRESSED);
+                        g.fillRect(xNatural, yNatural, NATURAL_WIDTH, NATURAL_HEIGHT);
+                        g.setColor(Color.BLACK);
+                        g.drawRect(xNatural, yNatural, NATURAL_WIDTH, NATURAL_HEIGHT);
+                        g.setColor(Color.RED);
+                        g.drawString(notes[i], xNatural + 30, NATURAL_HEIGHT + 5);
+                        g.drawString(keys[i], xNatural + 30, NATURAL_HEIGHT + 25);
+                    } else {
+                        g.setColor(Color.WHITE);
+                        g.fillRect(xNatural, yNatural, NATURAL_WIDTH, NATURAL_HEIGHT);
+                        g.setColor(Color.BLACK);
+                        g.drawRect(xNatural, yNatural, NATURAL_WIDTH, NATURAL_HEIGHT);
+                        g.setColor(Color.RED);
+                        g.drawString(notes[i], xNatural + 30, NATURAL_HEIGHT + 5);
+                        g.drawString(keys[i], xNatural + 30, NATURAL_HEIGHT + 25);
+                    }
+                    xNatural += NATURAL_WIDTH; i++;
+                }
+                
+                for (Boolean b : nat2) {
+                    if (b == true) {
+                        g.setColor(PRESSED);
+                        g.fillRect(xNatural, yNatural, NATURAL_WIDTH, NATURAL_HEIGHT);
+                        g.setColor(Color.BLACK);
+                        g.drawRect(xNatural, yNatural, NATURAL_WIDTH, NATURAL_HEIGHT);
+                        g.setColor(Color.RED);
+                        g.drawString(notes[i], xNatural + 30, NATURAL_HEIGHT + 5);
+                        g.drawString(keys[i], xNatural + 30, NATURAL_HEIGHT + 25);
+                    } else {
+                        g.setColor(Color.WHITE);
+                        g.fillRect(xNatural, yNatural, NATURAL_WIDTH, NATURAL_HEIGHT);
+                        g.setColor(Color.BLACK);
+                        g.drawRect(xNatural, yNatural, NATURAL_WIDTH, NATURAL_HEIGHT);
+                        g.setColor(Color.RED);
+                        g.drawString(notes[i], xNatural + 30, NATURAL_HEIGHT + 5);
+                        g.drawString(keys[i], xNatural + 30, NATURAL_HEIGHT + 25);
+                    }
+                    xNatural += NATURAL_WIDTH; i++;
+                }
+                xNatural = STARTX_NATURAL;
+                panel.repaint();
+
+                // Check the sharp keys.
+                for (Boolean s : sharps1) {
+                    if (s == true) {
+                        g.setColor(PRESSED);
+                        g.fillRect(xSharp, ySharp, SHARP_WIDTH, SHARP_HEIGHT);
+                        g.setColor(Color.BLACK);
+                        g.drawRect(xSharp, ySharp, SHARP_WIDTH, SHARP_HEIGHT);
+                        g.setColor(Color.RED);
+                        g.drawString(notes[i], xSharp + 15, SHARP_HEIGHT + 5);
+                        g.drawString(keys[i], xSharp + 15, SHARP_HEIGHT + 25);
+                    } else {
+                        g.setColor(SHARPRGB);
+                        g.fillRect(xSharp, ySharp, SHARP_WIDTH, SHARP_HEIGHT);
+                        g.setColor(Color.BLACK);
+                        g.drawRect(xSharp, ySharp, SHARP_WIDTH, SHARP_HEIGHT);
+                        g.setColor(Color.RED);
+                        g.drawString(notes[i], xSharp + 15, SHARP_HEIGHT + 5);
+                        g.drawString(keys[i], xSharp + 15, SHARP_HEIGHT + 25);
+                    }
+                    xSharp += NATURAL_WIDTH; i++;
+                }
+                
+                xSharp += NATURAL_WIDTH;
+                
+                for (Boolean s : sharps2) {
+                    if (s == true) {
+                        g.setColor(PRESSED);
+                        g.fillRect(xSharp, ySharp, SHARP_WIDTH, SHARP_HEIGHT);
+                        g.setColor(Color.BLACK);
+                        g.drawRect(xSharp, ySharp, SHARP_WIDTH, SHARP_HEIGHT);
+                        g.setColor(Color.RED);
+                        g.drawString(notes[i], xSharp + 15, SHARP_HEIGHT + 5);
+                        g.drawString(keys[i], xSharp + 15, SHARP_HEIGHT + 25);
+                    } else {
+                        g.setColor(SHARPRGB);
+                        g.fillRect(xSharp, ySharp, SHARP_WIDTH, SHARP_HEIGHT);
+                        g.setColor(Color.BLACK);
+                        g.drawRect(xSharp, ySharp, SHARP_WIDTH, SHARP_HEIGHT);
+                        g.setColor(Color.RED);
+                        g.drawString(notes[i], xSharp + 15, SHARP_HEIGHT + 5);
+                        g.drawString(keys[i], xSharp + 15, SHARP_HEIGHT + 25);
+                    }
+                    xSharp += NATURAL_WIDTH; i++;
+                }
+                xSharp = STARTX_SHARP; i = 0;
+                panel.repaint();
+            }
+        };
+
+        frame.add(panel);
+        frame.addKeyListener(this);
+        frame.pack();
+        frame.setVisible(true);
     }
     
     @Override public void keyPressed(KeyEvent ke) {
