@@ -1,33 +1,38 @@
+// Imports for swing.
+import java.awt.*;
+import java.awt.event.*;
+import java.util.*;
+import javax.swing.*;
+import javax.swing.event.*;
 
+// Imports for files.
+import java.io.File;
+import java.io.IOException;
+import java.util.Scanner;
+
+// Imports for sound.
+import javax.sound.sampled.*;
 /**
  * Write a description of class Piano here.
  *
  * @author (your name)
  * @version (a version number or a date)
  */
-public class Piano
-{
-    // instance variables - replace the example below with your own
-    private int x;
-
-    /**
-     * Constructor for objects of class Piano
-     */
-    public Piano()
-    {
-        // initialise instance variables
-        x = 0;
+public class Piano extends KeyAdapter implements Runnable {
+    
+    @Override public void run() {
+        
     }
-
-    /**
-     * An example of a method - replace this comment with your own
-     *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
-     */
-    public int sampleMethod(int y)
-    {
-        // put your code here
-        return x + y;
+    
+    @Override public void keyPressed(KeyEvent e) {
+        
+    }
+    
+    @Override public void keyReleased(KeyEvent e) {
+        
+    }
+    
+    public static void main(String[] args) {
+        javax.swing.SwingUtilities.invokeLater(new Piano());
     }
 }
