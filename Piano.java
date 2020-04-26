@@ -38,7 +38,7 @@ public class Piano extends KeyAdapter implements Runnable {
     private boolean csharp, dsharp, fsharp, gsharp, asharp = false;
     private int xBase, yBase, xSharp, ySharp;
     private java.util.List<Boolean> base1, base2, sharps1, sharps2;
-    private JComboBox octives;
+    private JComboBox octaves;
     
     /** Arrays to store note Strrings and keys to press. */
     private String[] notes = {" C ", " D ", " E ", " F ", " G ", " A ", " B ",
