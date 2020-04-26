@@ -8,7 +8,6 @@ import javax.swing.event.*;
 // Imports for files.
 import java.io.File;
 import java.io.IOException;
-import java.util.Scanner;
 
 // Imports for sound.
 import javax.sound.sampled.*;
@@ -33,7 +32,7 @@ public class Piano extends KeyAdapter implements Runnable {
     private static final Color SHARPRGB = new Color(5, 5, 5);
 
     /** Instance variables. */
-    private JPanel panel;
+    private JPanel panel, octavePanel;
     private boolean c, d, e, f, g, a, b = false;
     private boolean csharp, dsharp, fsharp, gsharp, asharp = false;
     private int xNatural, yNatural, xSharp, ySharp;
@@ -62,7 +61,7 @@ public class Piano extends KeyAdapter implements Runnable {
         sharps1.add(csharp); sharps1.add(dsharp);
         sharps2.add(fsharp); sharps2.add(gsharp); sharps2.add(asharp);
         
-        panel = new JPanel() {
+        panel = new JPanel(new BorderLayout()) {
             @Override public void paintComponent(Graphics g) {
                 super.paintComponent(g);
 
@@ -169,7 +168,10 @@ public class Piano extends KeyAdapter implements Runnable {
         octaves.addItem("4"); octaves.addItem("5"); octaves.addItem("6");
         octaves.addItem("7");
         
-        panel.add(octaves);
+        octavePanel = new JPanel();
+        octavePanel.add(new JLabel("Octave:"));
+        octavePanel.add(octaves);
+        panel.add(octavePanel, BorderLayout.SOUTH);
 
         frame.add(panel);
         frame.addKeyListener(this);
