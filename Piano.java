@@ -32,7 +32,8 @@ public class Piano extends KeyAdapter implements Runnable, ActionListener {
     private static final Color SHARPRGB = new Color(5, 5, 5);
 
     /** Instance variables. */
-    private JPanel panel, octavePanel;
+    private JFrame frame;
+    private JPanel pianoPanel, octavePanel, mainPanel;
     private boolean c, d, e, f, g, a, b = false;
     private boolean csharp, dsharp, fsharp, gsharp, asharp = false;
     private int xNatural, yNatural, xSharp, ySharp;
@@ -49,7 +50,7 @@ public class Piano extends KeyAdapter implements Runnable, ActionListener {
     
     @Override public void run() {
         JFrame.setDefaultLookAndFeelDecorated(true);
-        JFrame frame = new JFrame("Piano");
+        frame = new JFrame("Piano");
         frame.setPreferredSize(new Dimension(600,450));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -61,7 +62,9 @@ public class Piano extends KeyAdapter implements Runnable, ActionListener {
         sharps1.add(csharp); sharps1.add(dsharp);
         sharps2.add(fsharp); sharps2.add(gsharp); sharps2.add(asharp);
         
-        panel = new JPanel(new BorderLayout()) {
+        mainPanel = new JPanel(new BorderLayout());
+        
+        pianoPanel = new JPanel() {
             @Override public void paintComponent(Graphics g) {
                 super.paintComponent(g);
 
@@ -112,7 +115,7 @@ public class Piano extends KeyAdapter implements Runnable, ActionListener {
                     xNatural += NATURAL_WIDTH; i++;
                 }
                 xNatural = STARTX_NATURAL;
-                panel.repaint();
+                pianoPanel.repaint();
 
                 // Check the sharp keys.
                 for (Boolean s : sharps1) {
@@ -159,7 +162,7 @@ public class Piano extends KeyAdapter implements Runnable, ActionListener {
                     xSharp += NATURAL_WIDTH; i++;
                 }
                 xSharp = STARTX_SHARP; i = 0;
-                panel.repaint();
+                pianoPanel.repaint();
             }
         };
         
@@ -170,13 +173,17 @@ public class Piano extends KeyAdapter implements Runnable, ActionListener {
         
         octavePanel = new JPanel();
         octavePanel.add(new JLabel("Octave:"));
+        octaves.addActionListener(this);
         octavePanel.add(octaves);
-        panel.add(octavePanel, BorderLayout.SOUTH);
+        
+        
+        mainPanel.add(octavePanel, BorderLayout.SOUTH);
+        mainPanel.add(pianoPanel, BorderLayout.CENTER);
 
-        frame.add(panel);
+        frame.add(mainPanel);
         frame.addKeyListener(this);
-        //frame.addActionListener(this);
         frame.setFocusable(true);
+        
         frame.pack();
         frame.setVisible(true);
     }
@@ -184,89 +191,92 @@ public class Piano extends KeyAdapter implements Runnable, ActionListener {
     @Override public void keyPressed(KeyEvent ke) {
         // Natural Keys
         if (ke.getKeyCode() == KeyEvent.VK_Z) {
-            c = true; nat1.set(0, c); panel.repaint();
+            c = true; nat1.set(0, c); pianoPanel.repaint();
         }
         if (ke.getKeyCode() == KeyEvent.VK_X) {
-            d = true; nat1.set(1, d); panel.repaint();
+            d = true; nat1.set(1, d); pianoPanel.repaint();
         }
         if (ke.getKeyCode() == KeyEvent.VK_C) {
-            e = true; nat1.set(2, e); panel.repaint();
+            e = true; nat1.set(2, e); pianoPanel.repaint();
         }
         if (ke.getKeyCode() == KeyEvent.VK_V) {
-            f = true; nat1.set(3, f); panel.repaint();
+            f = true; nat1.set(3, f); pianoPanel.repaint();
         }
         if (ke.getKeyCode() == KeyEvent.VK_B) {
-            g = true; nat2.set(0, g); panel.repaint();
+            g = true; nat2.set(0, g); pianoPanel.repaint();
         }
         if (ke.getKeyCode() == KeyEvent.VK_N) {
-            a = true; nat2.set(1, a); panel.repaint();
+            a = true; nat2.set(1, a); pianoPanel.repaint();
         }
         if (ke.getKeyCode() == KeyEvent.VK_M) {
-            b = true; nat2.set(2, b); panel.repaint();
+            b = true; nat2.set(2, b); pianoPanel.repaint();
         }                
         
         // Sharp keys
         if (ke.getKeyCode() == KeyEvent.VK_S) {
-            csharp = true; sharps1.set(0, csharp); panel.repaint();
+            csharp = true; sharps1.set(0, csharp); pianoPanel.repaint();
         }
         if (ke.getKeyCode() == KeyEvent.VK_D) {
-            dsharp = true; sharps1.set(1, dsharp); panel.repaint();
+            dsharp = true; sharps1.set(1, dsharp); pianoPanel.repaint();
         }
         if (ke.getKeyCode() == KeyEvent.VK_G) {
-            fsharp = true; sharps2.set(0, fsharp); panel.repaint();
+            fsharp = true; sharps2.set(0, fsharp); pianoPanel.repaint();
         }
         if (ke.getKeyCode() == KeyEvent.VK_H) {
-            gsharp = true; sharps2.set(1, gsharp); panel.repaint();
+            gsharp = true; sharps2.set(1, gsharp); pianoPanel.repaint();
         }
         if (ke.getKeyCode() == KeyEvent.VK_J) {
-            asharp = true; sharps2.set(2, asharp); panel.repaint();
+            asharp = true; sharps2.set(2, asharp); pianoPanel.repaint();
         }
     }
     
     @Override public void keyReleased(KeyEvent ke) {
         // Natural Keys
         if (ke.getKeyCode() == KeyEvent.VK_Z) {
-            c = false; nat1.set(0, c); panel.repaint();
+            c = false; nat1.set(0, c); pianoPanel.repaint();
         }
         if (ke.getKeyCode() == KeyEvent.VK_X) {
-            d = false; nat1.set(1, d); panel.repaint();
+            d = false; nat1.set(1, d); pianoPanel.repaint();
         }
         if (ke.getKeyCode() == KeyEvent.VK_C) {
-            e = false; nat1.set(2, e); panel.repaint();
+            e = false; nat1.set(2, e); pianoPanel.repaint();
         }
         if (ke.getKeyCode() == KeyEvent.VK_V) {
-            f = false; nat1.set(3, f); panel.repaint();
+            f = false; nat1.set(3, f); pianoPanel.repaint();
         }
         if (ke.getKeyCode() == KeyEvent.VK_B) {
-            g = false; nat2.set(0, g); panel.repaint();
+            g = false; nat2.set(0, g); pianoPanel.repaint();
         }
         if (ke.getKeyCode() == KeyEvent.VK_N) {
-            a = false; nat2.set(1, a); panel.repaint();
+            a = false; nat2.set(1, a); pianoPanel.repaint();
         }
         if (ke.getKeyCode() == KeyEvent.VK_M) {
-            b = false; nat2.set(2, b); panel.repaint();
+            b = false; nat2.set(2, b); pianoPanel.repaint();
         }                
         
         // Sharp keys
         if (ke.getKeyCode() == KeyEvent.VK_S) {
-            csharp = false; sharps1.set(0, csharp); panel.repaint();
+            csharp = false; sharps1.set(0, csharp); pianoPanel.repaint();
         }
         if (ke.getKeyCode() == KeyEvent.VK_D) {
-            dsharp = false; sharps1.set(1, dsharp); panel.repaint();
+            dsharp = false; sharps1.set(1, dsharp); pianoPanel.repaint();
         }
         if (ke.getKeyCode() == KeyEvent.VK_G) {
-            fsharp = false; sharps2.set(0, fsharp); panel.repaint();
+            fsharp = false; sharps2.set(0, fsharp); pianoPanel.repaint();
         }
         if (ke.getKeyCode() == KeyEvent.VK_H) {
-            gsharp = false; sharps2.set(1, gsharp); panel.repaint();
+            gsharp = false; sharps2.set(1, gsharp); pianoPanel.repaint();
         }
         if (ke.getKeyCode() == KeyEvent.VK_J) {
-            asharp = false; sharps2.set(2, asharp); panel.repaint();
+            asharp = false; sharps2.set(2, asharp); pianoPanel.repaint();
         }
     }
     
     @Override public void actionPerformed(ActionEvent ae) {
-        
+        if (ae.getSource() == octaves) {
+            frame.transferFocusDownCycle();
+            return;
+        }
     }
     
     public static void main(String[] args) {
