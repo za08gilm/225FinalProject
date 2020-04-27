@@ -262,84 +262,108 @@ public class Piano extends KeyAdapter implements Runnable, ActionListener {
     @Override public void keyPressed(KeyEvent ke) {
         // Natural Keys
         if (ke.getKeyCode() == KeyEvent.VK_Z) {
-            c = true; nat1.set(0, c); pianoPanel.repaint();
+            c = true; nat1.set(0, c);
+            isPressed[0] = true; pianoPanel.repaint();
         }
         if (ke.getKeyCode() == KeyEvent.VK_X) {
-            d = true; nat1.set(1, d); pianoPanel.repaint();
+            d = true; nat1.set(1, d); 
+            isPressed[1] = true; pianoPanel.repaint();
         }
         if (ke.getKeyCode() == KeyEvent.VK_C) {
-            e = true; nat1.set(2, e); pianoPanel.repaint();
+            e = true; nat1.set(2, e); 
+            isPressed[2] = true; pianoPanel.repaint();
         }
         if (ke.getKeyCode() == KeyEvent.VK_V) {
-            f = true; nat1.set(3, f); pianoPanel.repaint();
+            f = true; nat1.set(3, f); 
+            isPressed[3] = true; pianoPanel.repaint();
         }
         if (ke.getKeyCode() == KeyEvent.VK_B) {
-            g = true; nat2.set(0, g); pianoPanel.repaint();
+            g = true; nat2.set(0, g); 
+            isPressed[4] = true; pianoPanel.repaint();
         }
         if (ke.getKeyCode() == KeyEvent.VK_N) {
-            a = true; nat2.set(1, a); pianoPanel.repaint();
+            a = true; nat2.set(1, a); 
+            isPressed[5] = true; pianoPanel.repaint();
         }
         if (ke.getKeyCode() == KeyEvent.VK_M) {
-            b = true; nat2.set(2, b); pianoPanel.repaint();
+            b = true; nat2.set(2, b); 
+            isPressed[6] = true; pianoPanel.repaint();
         }                
 
         // Sharp keys
         if (ke.getKeyCode() == KeyEvent.VK_S) {
-            csharp = true; sharps1.set(0, csharp); pianoPanel.repaint();
+            csharp = true; sharps1.set(0, csharp); 
+            isPressed[7] = true; pianoPanel.repaint();
         }
         if (ke.getKeyCode() == KeyEvent.VK_D) {
-            dsharp = true; sharps1.set(1, dsharp); pianoPanel.repaint();
+            dsharp = true; sharps1.set(1, dsharp); 
+            isPressed[8] = true; pianoPanel.repaint();
         }
         if (ke.getKeyCode() == KeyEvent.VK_G) {
-            fsharp = true; sharps2.set(0, fsharp); pianoPanel.repaint();
+            fsharp = true; sharps2.set(0, fsharp); 
+            isPressed[9] = true; pianoPanel.repaint();
         }
         if (ke.getKeyCode() == KeyEvent.VK_H) {
-            gsharp = true; sharps2.set(1, gsharp); pianoPanel.repaint();
+            gsharp = true; sharps2.set(1, gsharp); 
+            isPressed[10] = true; pianoPanel.repaint();
         }
         if (ke.getKeyCode() == KeyEvent.VK_J) {
-            asharp = true; sharps2.set(2, asharp); pianoPanel.repaint();
+            asharp = true; sharps2.set(2, asharp); 
+            isPressed[11] = true; pianoPanel.repaint();
         }
     }
 
     @Override public void keyReleased(KeyEvent ke) {
         // Natural Keys
         if (ke.getKeyCode() == KeyEvent.VK_Z) {
-            c = false; nat1.set(0, c); pianoPanel.repaint();
+            c = false; nat1.set(0, c); 
+            isPressed[0] = false; pianoPanel.repaint();
         }
         if (ke.getKeyCode() == KeyEvent.VK_X) {
-            d = false; nat1.set(1, d); pianoPanel.repaint();
+            d = false; nat1.set(1, d); 
+            isPressed[1] = false; pianoPanel.repaint();
         }
         if (ke.getKeyCode() == KeyEvent.VK_C) {
-            e = false; nat1.set(2, e); pianoPanel.repaint();
+            e = false; nat1.set(2, e); 
+            isPressed[2] = false; pianoPanel.repaint();
         }
         if (ke.getKeyCode() == KeyEvent.VK_V) {
-            f = false; nat1.set(3, f); pianoPanel.repaint();
+            f = false; nat1.set(3, f); 
+            isPressed[3] = false; pianoPanel.repaint();
         }
         if (ke.getKeyCode() == KeyEvent.VK_B) {
-            g = false; nat2.set(0, g); pianoPanel.repaint();
+            g = false; nat2.set(0, g); 
+            isPressed[4] = false; pianoPanel.repaint();
         }
         if (ke.getKeyCode() == KeyEvent.VK_N) {
-            a = false; nat2.set(1, a); pianoPanel.repaint();
+            a = false; nat2.set(1, a); 
+            isPressed[5] = false; pianoPanel.repaint();
         }
         if (ke.getKeyCode() == KeyEvent.VK_M) {
-            b = false; nat2.set(2, b); pianoPanel.repaint();
+            b = false; nat2.set(2, b); 
+            isPressed[6] = false; pianoPanel.repaint();
         }                
 
         // Sharp keys
         if (ke.getKeyCode() == KeyEvent.VK_S) {
-            csharp = false; sharps1.set(0, csharp); pianoPanel.repaint();
+            csharp = false; sharps1.set(0, csharp); 
+            isPressed[7] = false; pianoPanel.repaint();
         }
         if (ke.getKeyCode() == KeyEvent.VK_D) {
-            dsharp = false; sharps1.set(1, dsharp); pianoPanel.repaint();
+            dsharp = false; sharps1.set(1, dsharp); 
+            isPressed[8] = false; pianoPanel.repaint();
         }
         if (ke.getKeyCode() == KeyEvent.VK_G) {
-            fsharp = false; sharps2.set(0, fsharp); pianoPanel.repaint();
+            fsharp = false; sharps2.set(0, fsharp);
+            isPressed[9] = false; pianoPanel.repaint();
         }
         if (ke.getKeyCode() == KeyEvent.VK_H) {
-            gsharp = false; sharps2.set(1, gsharp); pianoPanel.repaint();
+            gsharp = false; sharps2.set(1, gsharp);
+            isPressed[10] = false; pianoPanel.repaint();
         }
         if (ke.getKeyCode() == KeyEvent.VK_J) {
-            asharp = false; sharps2.set(2, asharp); pianoPanel.repaint();
+            asharp = false; sharps2.set(2, asharp);
+            isPressed[11] = false; pianoPanel.repaint();
         }
     }
 
@@ -362,7 +386,7 @@ public class Piano extends KeyAdapter implements Runnable, ActionListener {
 
     public void playNote(int index) throws IOException,
     UnsupportedAudioFileException, LineUnavailableException {
-        if (isPressed[index]) {
+        if (isPressed[index] == true) {
             noteClips[index].start();
         } else {
             noteClips[index].stop();
