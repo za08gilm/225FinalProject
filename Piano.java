@@ -10,8 +10,11 @@ import java.io.File;
 import java.io.IOException;
 
 // Imports for sound.
+import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.sound.sampled.LineUnavailableException;
 /**
  * Write a description of class Piano here.
  *
@@ -19,7 +22,7 @@ import javax.sound.sampled.Clip;
  * @version (a version number or a date)
  */
 public class Piano extends KeyAdapter implements Runnable, ActionListener {
-    
+
     /** Static variables */
     private static final int STARTX_NATURAL = 25;
     private static final int STARTY_NATURAL = 30;
@@ -31,6 +34,7 @@ public class Piano extends KeyAdapter implements Runnable, ActionListener {
     private static final int SHARP_HEIGHT = 120;
     private static final Color PRESSED = new Color(185, 185, 185);
     private static final Color SHARPRGB = new Color(5, 5, 5);
+    private static final int NOTE_NUM = 12;
 
     /** Instance variables. */
     private JFrame frame;
@@ -40,15 +44,21 @@ public class Piano extends KeyAdapter implements Runnable, ActionListener {
     private int xNatural, yNatural, xSharp, ySharp;
     private java.util.List<Boolean> nat1, nat2, sharps1, sharps2;
     private JComboBox octaves;
-    
+
     /** Arrays to store note Strrings and keys to press. */
     private String[] notes = {" C ", " D ", " E ", " F ", " G ", " A ", " B ",
-                              "C#", "D#", "F#", "G#", "A#"};
-                              
-    private String[] keys = {"(Z)", "(X)", "(C)", "(V)", "(B)", "(N)", "(M)",
-                             "(S)", "(D)", "(G)", "(H)", "(J)"};
+            "C#", "D#", "F#", "G#", "A#"};
 
-    
+    private String[] keys = {"(Z)", "(X)", "(C)", "(V)", "(B)", "(N)", "(M)",
+            "(S)", "(D)", "(G)", "(H)", "(J)"};
+
+    private String[] noteFiles = {"C3.aif", "C3.aif", "C3.aif", "C3.aif", "C3.aif",
+                                  "C3.aif", "C3.aif", "C3.aif", "C3.aif", "C3.aif",
+                                  "C3.aif", "C3.aif"};
+    private Clip[] noteClips = new Clip[NOTE_NUM];
+    private boolean[] isPressed = {c, d, e, f, g, a, b, csharp, dsharp, fsharp, 
+            gsharp, asharp};
+
     @Override public void run() {
         JFrame.setDefaultLookAndFeelDecorated(true);
         frame = new JFrame("Piano");
@@ -57,14 +67,26 @@ public class Piano extends KeyAdapter implements Runnable, ActionListener {
 
         nat1 = new java.util.ArrayList(); sharps1 = new java.util.ArrayList();
         nat2 = new java.util.ArrayList(); sharps2 = new java.util.ArrayList();
-        
+
         nat1.add(c); nat1.add(d); nat1.add(e); nat1.add(f); 
         nat2.add(g); nat2.add(a); nat2.add(b);
         sharps1.add(csharp); sharps1.add(dsharp);
         sharps2.add(fsharp); sharps2.add(gsharp); sharps2.add(asharp);
-        
+
         mainPanel = new JPanel(new BorderLayout());
-        
+
+        for (int i = 0; i < NOTE_NUM; i++) {
+            try {
+                AudioInputStream ais = AudioSystem.getAudioInputStream
+                    (new File(noteFiles[i]).getAbsoluteFile());
+                Clip clip = AudioSystem.getClip();
+                clip.open(ais);
+                noteClips[i] = clip;
+            } catch(Exception e) {
+                System.err.println(e);
+            }
+        }
+
         pianoPanel = new JPanel() {
             @Override public void paintComponent(Graphics g) {
                 super.paintComponent(g);
@@ -83,6 +105,12 @@ public class Piano extends KeyAdapter implements Runnable, ActionListener {
                         g.setColor(Color.RED);
                         g.drawString(notes[i], xNatural + 30, NATURAL_HEIGHT + 5);
                         g.drawString(keys[i], xNatural + 30, NATURAL_HEIGHT + 25);
+
+                        try {
+                            playNote(i);
+                        } catch(Exception e) {
+                            System.err.println(e);
+                        }
                     } else {
                         g.setColor(Color.WHITE);
                         g.fillRect(xNatural, yNatural, NATURAL_WIDTH, NATURAL_HEIGHT);
@@ -91,10 +119,16 @@ public class Piano extends KeyAdapter implements Runnable, ActionListener {
                         g.setColor(Color.RED);
                         g.drawString(notes[i], xNatural + 30, NATURAL_HEIGHT + 5);
                         g.drawString(keys[i], xNatural + 30, NATURAL_HEIGHT + 25);
+                        
+                        try {
+                            playNote(i);
+                        } catch(Exception e) {
+                            System.err.println(e);
+                        }
                     }
                     xNatural += NATURAL_WIDTH; i++;
                 }
-                
+
                 for (Boolean b : nat2) {
                     if (b == true) {
                         g.setColor(PRESSED);
@@ -104,6 +138,12 @@ public class Piano extends KeyAdapter implements Runnable, ActionListener {
                         g.setColor(Color.RED);
                         g.drawString(notes[i], xNatural + 30, NATURAL_HEIGHT + 5);
                         g.drawString(keys[i], xNatural + 30, NATURAL_HEIGHT + 25);
+                        
+                        try {
+                            playNote(i);
+                        } catch(Exception e) {
+                            System.err.println(e);
+                        }
                     } else {
                         g.setColor(Color.WHITE);
                         g.fillRect(xNatural, yNatural, NATURAL_WIDTH, NATURAL_HEIGHT);
@@ -112,6 +152,12 @@ public class Piano extends KeyAdapter implements Runnable, ActionListener {
                         g.setColor(Color.RED);
                         g.drawString(notes[i], xNatural + 30, NATURAL_HEIGHT + 5);
                         g.drawString(keys[i], xNatural + 30, NATURAL_HEIGHT + 25);
+                        
+                        try {
+                            playNote(i);
+                        } catch(Exception e) {
+                            System.err.println(e);
+                        }
                     }
                     xNatural += NATURAL_WIDTH; i++;
                 }
@@ -128,6 +174,12 @@ public class Piano extends KeyAdapter implements Runnable, ActionListener {
                         g.setColor(Color.RED);
                         g.drawString(notes[i], xSharp + 15, SHARP_HEIGHT + 5);
                         g.drawString(keys[i], xSharp + 15, SHARP_HEIGHT + 25);
+                        
+                        try {
+                            playNote(i);
+                        } catch(Exception e) {
+                            System.err.println(e);
+                        }
                     } else {
                         g.setColor(SHARPRGB);
                         g.fillRect(xSharp, ySharp, SHARP_WIDTH, SHARP_HEIGHT);
@@ -136,12 +188,18 @@ public class Piano extends KeyAdapter implements Runnable, ActionListener {
                         g.setColor(Color.RED);
                         g.drawString(notes[i], xSharp + 15, SHARP_HEIGHT + 5);
                         g.drawString(keys[i], xSharp + 15, SHARP_HEIGHT + 25);
+                        
+                        try {
+                            playNote(i);
+                        } catch(Exception e) {
+                            System.err.println(e);
+                        }
                     }
                     xSharp += NATURAL_WIDTH; i++;
                 }
-                
+
                 xSharp += NATURAL_WIDTH;
-                
+
                 for (Boolean s : sharps2) {
                     if (s == true) {
                         g.setColor(PRESSED);
@@ -151,6 +209,12 @@ public class Piano extends KeyAdapter implements Runnable, ActionListener {
                         g.setColor(Color.RED);
                         g.drawString(notes[i], xSharp + 15, SHARP_HEIGHT + 5);
                         g.drawString(keys[i], xSharp + 15, SHARP_HEIGHT + 25);
+                        
+                        try {
+                            playNote(i);
+                        } catch(Exception e) {
+                            System.err.println(e);
+                        }
                     } else {
                         g.setColor(SHARPRGB);
                         g.fillRect(xSharp, ySharp, SHARP_WIDTH, SHARP_HEIGHT);
@@ -159,6 +223,12 @@ public class Piano extends KeyAdapter implements Runnable, ActionListener {
                         g.setColor(Color.RED);
                         g.drawString(notes[i], xSharp + 15, SHARP_HEIGHT + 5);
                         g.drawString(keys[i], xSharp + 15, SHARP_HEIGHT + 25);
+                        
+                        try {
+                            playNote(i);
+                        } catch(Exception e) {
+                            System.err.println(e);
+                        }
                     }
                     xSharp += NATURAL_WIDTH; i++;
                 }
@@ -166,29 +236,29 @@ public class Piano extends KeyAdapter implements Runnable, ActionListener {
                 pianoPanel.repaint();
             }
         };
-        
+
         octaves = new JComboBox();
-        octaves.addItem("1"); octaves.addItem("2"); octaves.addItem("3");
-        octaves.addItem("4"); octaves.addItem("5"); octaves.addItem("6");
-        octaves.addItem("7");
-        
+        for (int i = 1; i < 8; i++) {
+            octaves.addItem("" + i);
+        }
+        octaves.setSelectedItem("3");
+
         octavePanel = new JPanel();
         octavePanel.add(new JLabel("Octave:"));
         octaves.addActionListener(this);
-        octavePanel.add(octaves);
-        
-        
+        octavePanel.add(octaves);        
+
         mainPanel.add(octavePanel, BorderLayout.SOUTH);
         mainPanel.add(pianoPanel, BorderLayout.CENTER);
 
         frame.add(mainPanel);
         frame.addKeyListener(this);
         frame.setFocusable(true);
-        
+
         frame.pack();
         frame.setVisible(true);
     }
-    
+
     @Override public void keyPressed(KeyEvent ke) {
         // Natural Keys
         if (ke.getKeyCode() == KeyEvent.VK_Z) {
@@ -212,7 +282,7 @@ public class Piano extends KeyAdapter implements Runnable, ActionListener {
         if (ke.getKeyCode() == KeyEvent.VK_M) {
             b = true; nat2.set(2, b); pianoPanel.repaint();
         }                
-        
+
         // Sharp keys
         if (ke.getKeyCode() == KeyEvent.VK_S) {
             csharp = true; sharps1.set(0, csharp); pianoPanel.repaint();
@@ -230,7 +300,7 @@ public class Piano extends KeyAdapter implements Runnable, ActionListener {
             asharp = true; sharps2.set(2, asharp); pianoPanel.repaint();
         }
     }
-    
+
     @Override public void keyReleased(KeyEvent ke) {
         // Natural Keys
         if (ke.getKeyCode() == KeyEvent.VK_Z) {
@@ -254,7 +324,7 @@ public class Piano extends KeyAdapter implements Runnable, ActionListener {
         if (ke.getKeyCode() == KeyEvent.VK_M) {
             b = false; nat2.set(2, b); pianoPanel.repaint();
         }                
-        
+
         // Sharp keys
         if (ke.getKeyCode() == KeyEvent.VK_S) {
             csharp = false; sharps1.set(0, csharp); pianoPanel.repaint();
@@ -272,14 +342,38 @@ public class Piano extends KeyAdapter implements Runnable, ActionListener {
             asharp = false; sharps2.set(2, asharp); pianoPanel.repaint();
         }
     }
-    
+
     @Override public void actionPerformed(ActionEvent ae) {
         if (ae.getSource() == octaves) {
+            if (octaves.getSelectedItem().equals("3")) {
+                for (int i = 0; i < NOTE_NUM; i++) {
+                    noteFiles[i] = "C3.aif";
+                }
+            } else {
+                for (int i = 0; i < NOTE_NUM; i++) {
+                    noteFiles[i] = "C4.aif";
+                }
+            }
+
             frame.transferFocusDownCycle();
             return;
         }
     }
-    
+
+    public void playNote(int index) throws IOException,
+    UnsupportedAudioFileException, LineUnavailableException {
+        if (isPressed[index]) {
+            noteClips[index].start();
+        } else {
+            noteClips[index].stop();
+            AudioInputStream ais = AudioSystem.getAudioInputStream
+                (new File(noteFiles[index]).getAbsoluteFile());
+            Clip clip = AudioSystem.getClip();
+            clip.open(ais);
+            noteClips[index] = clip;
+        }
+    }
+
     public static void main(String[] args) {
         javax.swing.SwingUtilities.invokeLater(new Piano());
     }
