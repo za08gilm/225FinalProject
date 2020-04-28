@@ -420,6 +420,7 @@ public class Piano extends KeyAdapter implements Runnable, ActionListener {
             noteClips[index].start();
         } else {
             noteClips[index].stop();
+            noteClips[index].close();
             ais = AudioSystem.getAudioInputStream
                 (new File(noteFiles[index]).getAbsoluteFile());
             clip = AudioSystem.getClip();
