@@ -44,6 +44,8 @@ public class Piano extends KeyAdapter implements Runnable, ActionListener {
     private int xNatural, yNatural, xSharp, ySharp;
     private java.util.List<Boolean> nat1, nat2, sharps1, sharps2;
     private JComboBox octaves;
+    private AudioInputStream ais;
+    private Clip clip;
 
     /** Arrays to store note Strrings and keys to press. */
     private String[] notes = {" C ", " D ", " E ", " F ", " G ", " A ", " B ",
@@ -77,9 +79,9 @@ public class Piano extends KeyAdapter implements Runnable, ActionListener {
 
         for (int i = 0; i < NOTE_NUM; i++) {
             try {
-                AudioInputStream ais = AudioSystem.getAudioInputStream
+                ais = AudioSystem.getAudioInputStream
                     (new File(noteFiles[i]).getAbsoluteFile());
-                Clip clip = AudioSystem.getClip();
+                clip = AudioSystem.getClip();
                 clip.open(ais);
                 noteClips[i] = clip;
             } catch(Exception e) {
@@ -418,9 +420,9 @@ public class Piano extends KeyAdapter implements Runnable, ActionListener {
             noteClips[index].start();
         } else {
             noteClips[index].stop();
-            AudioInputStream ais = AudioSystem.getAudioInputStream
+            ais = AudioSystem.getAudioInputStream
                 (new File(noteFiles[index]).getAbsoluteFile());
-            Clip clip = AudioSystem.getClip();
+            clip = AudioSystem.getClip();
             clip.open(ais);
             noteClips[index] = clip;
         }
