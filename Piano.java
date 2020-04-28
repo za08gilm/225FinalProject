@@ -52,9 +52,9 @@ public class Piano extends KeyAdapter implements Runnable, ActionListener {
     private String[] keys = {"(Z)", "(X)", "(C)", "(V)", "(B)", "(N)", "(M)",
             "(S)", "(D)", "(G)", "(H)", "(J)"};
 
-    private String[] noteFiles = {"C3.aif", "C3.aif", "C3.aif", "C3.aif", "C3.aif",
-                                  "C3.aif", "C3.aif", "C3.aif", "C3.aif", "C3.aif",
-                                  "C3.aif", "C3.aif"};
+    private String[] noteFiles = {"C3.aif", "D3.aif", "E3.aif", "F3.aif", "G3.aif",
+            "A3.aif", "B3.aif", "C#3.aif", "D#3.aif", "F#3.aif",
+            "G#3.aif", "A#3.aif"};
     private Clip[] noteClips = new Clip[NOTE_NUM];
     private boolean[] isPressed = {c, d, e, f, g, a, b, csharp, dsharp, fsharp, 
             gsharp, asharp};
@@ -119,7 +119,7 @@ public class Piano extends KeyAdapter implements Runnable, ActionListener {
                         g.setColor(Color.RED);
                         g.drawString(notes[i], xNatural + 30, NATURAL_HEIGHT + 5);
                         g.drawString(keys[i], xNatural + 30, NATURAL_HEIGHT + 25);
-                        
+
                         try {
                             playNote(i);
                         } catch(Exception e) {
@@ -138,7 +138,7 @@ public class Piano extends KeyAdapter implements Runnable, ActionListener {
                         g.setColor(Color.RED);
                         g.drawString(notes[i], xNatural + 30, NATURAL_HEIGHT + 5);
                         g.drawString(keys[i], xNatural + 30, NATURAL_HEIGHT + 25);
-                        
+
                         try {
                             playNote(i);
                         } catch(Exception e) {
@@ -152,7 +152,7 @@ public class Piano extends KeyAdapter implements Runnable, ActionListener {
                         g.setColor(Color.RED);
                         g.drawString(notes[i], xNatural + 30, NATURAL_HEIGHT + 5);
                         g.drawString(keys[i], xNatural + 30, NATURAL_HEIGHT + 25);
-                        
+
                         try {
                             playNote(i);
                         } catch(Exception e) {
@@ -174,7 +174,7 @@ public class Piano extends KeyAdapter implements Runnable, ActionListener {
                         g.setColor(Color.RED);
                         g.drawString(notes[i], xSharp + 15, SHARP_HEIGHT + 5);
                         g.drawString(keys[i], xSharp + 15, SHARP_HEIGHT + 25);
-                        
+
                         try {
                             playNote(i);
                         } catch(Exception e) {
@@ -188,7 +188,7 @@ public class Piano extends KeyAdapter implements Runnable, ActionListener {
                         g.setColor(Color.RED);
                         g.drawString(notes[i], xSharp + 15, SHARP_HEIGHT + 5);
                         g.drawString(keys[i], xSharp + 15, SHARP_HEIGHT + 25);
-                        
+
                         try {
                             playNote(i);
                         } catch(Exception e) {
@@ -209,7 +209,7 @@ public class Piano extends KeyAdapter implements Runnable, ActionListener {
                         g.setColor(Color.RED);
                         g.drawString(notes[i], xSharp + 15, SHARP_HEIGHT + 5);
                         g.drawString(keys[i], xSharp + 15, SHARP_HEIGHT + 25);
-                        
+
                         try {
                             playNote(i);
                         } catch(Exception e) {
@@ -223,7 +223,7 @@ public class Piano extends KeyAdapter implements Runnable, ActionListener {
                         g.setColor(Color.RED);
                         g.drawString(notes[i], xSharp + 15, SHARP_HEIGHT + 5);
                         g.drawString(keys[i], xSharp + 15, SHARP_HEIGHT + 25);
-                        
+
                         try {
                             playNote(i);
                         } catch(Exception e) {
@@ -369,19 +369,47 @@ public class Piano extends KeyAdapter implements Runnable, ActionListener {
 
     @Override public void actionPerformed(ActionEvent ae) {
         if (ae.getSource() == octaves) {
-            if (octaves.getSelectedItem().equals("3")) {
-                for (int i = 0; i < NOTE_NUM; i++) {
-                    noteFiles[i] = "C3.aif";
-                }
-            } else {
-                for (int i = 0; i < NOTE_NUM; i++) {
-                    noteFiles[i] = "C4.aif";
-                }
-            }
+            if (octaves.getSelectedItem().equals("1")) {
+                noteFiles[0] = "C1.aif"; noteFiles[1] = "D1.aif"; noteFiles[2] = "E1.aif";
+                noteFiles[3] = "F1.aif"; noteFiles[4] = "G1.aif"; noteFiles[5] = "A1.aif";
+                noteFiles[6] = "B1.aif"; noteFiles[7] = "C#1.aif"; noteFiles[8] = "D#1.aif";
+                noteFiles[9] = "F#1.aif"; noteFiles[10] = "G#1.aif"; noteFiles[11] = "A#1.aif";
+            } else if (octaves.getSelectedItem().equals("2")) {
+                noteFiles[0] = "C2.aif"; noteFiles[1] = "D2.aif"; noteFiles[2] = "E2.aif";
+                noteFiles[3] = "F2.aif"; noteFiles[4] = "G2.aif"; noteFiles[5] = "A2.aif";
+                noteFiles[6] = "B2.aif"; noteFiles[7] = "C#2.aif"; noteFiles[8] = "D#2.aif";
+                noteFiles[9] = "F#2.aif"; noteFiles[10] = "G#2.aif"; noteFiles[11] = "A#2.aif";
+            } else if (octaves.getSelectedItem().equals("3")) {
+                noteFiles[0] = "C3.aif"; noteFiles[1] = "D3.aif"; noteFiles[2] = "E3.aif";
+                noteFiles[3] = "F3.aif"; noteFiles[4] = "G3.aif"; noteFiles[5] = "A3.aif";
+                noteFiles[6] = "B3.aif"; noteFiles[7] = "C#3.aif"; noteFiles[8] = "D#3.aif";
+                noteFiles[9] = "F#3.aif"; noteFiles[10] = "G#3.aif"; noteFiles[11] = "A#3.aif";
+            } else if (octaves.getSelectedItem().equals("4")) {
+                noteFiles[0] = "C4.aif"; noteFiles[1] = "D4.aif"; noteFiles[2] = "E4.aif";
+                noteFiles[3] = "F4.aif"; noteFiles[4] = "G4.aif"; noteFiles[5] = "A4.aif";
+                noteFiles[6] = "B4.aif"; noteFiles[7] = "C#4.aif"; noteFiles[8] = "D#4.aif";
+                noteFiles[9] = "F#4.aif"; noteFiles[10] = "G#4.aif"; noteFiles[11] = "A#4.aif";
+            } else if (octaves.getSelectedItem().equals("5")) {
+                noteFiles[0] = "C5.aif"; noteFiles[1] = "D5.aif"; noteFiles[2] = "E5.aif";
+                noteFiles[3] = "F5.aif"; noteFiles[4] = "G5.aif"; noteFiles[5] = "A5.aif";
+                noteFiles[6] = "B5.aif"; noteFiles[7] = "C#5.aif"; noteFiles[8] = "D#5.aif";
+                noteFiles[9] = "F#5.aif"; noteFiles[10] = "G#5.aif"; noteFiles[11] = "A#5.aif";
+            } else if (octaves.getSelectedItem().equals("6")) {
+                noteFiles[0] = "C6.aif"; noteFiles[1] = "D6.aif"; noteFiles[2] = "E6.aif";
+                noteFiles[3] = "F6.aif"; noteFiles[4] = "G6.aif"; noteFiles[5] = "A6.aif";
+                noteFiles[6] = "B6.aif"; noteFiles[7] = "C#6.aif"; noteFiles[8] = "D#6.aif";
+                noteFiles[9] = "F#6.aif"; noteFiles[10] = "G#6.aif"; noteFiles[11] = "A#6.aif";
+            } else { // (octaves.getSelectedItem().equals("7"))
+                noteFiles[0] = "C7.aif"; noteFiles[1] = "D7.aif"; noteFiles[2] = "E7.aif";
+                noteFiles[3] = "F7.aif"; noteFiles[4] = "G7.aif"; noteFiles[5] = "A7.aif";
+                noteFiles[6] = "B7.aif"; noteFiles[7] = "C#7.aif"; noteFiles[8] = "D#7.aif";
+                noteFiles[9] = "F#7.aif"; noteFiles[10] = "G#7.aif"; noteFiles[11] = "A#7.aif";
+            } 
 
             frame.transferFocusDownCycle();
             return;
         }
+
     }
 
     public void playNote(int index) throws IOException,
