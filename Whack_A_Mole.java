@@ -12,10 +12,13 @@ import javax.swing.event.*;
 public class Whack_A_Mole extends MouseAdapter implements Runnable  
 {
     // Instance variables go here
-    private JPanel panel;
-    protected java.util.List<Mole> list;
+    private JPanel mainPanel, gamePanel, controlPanel;
+    protected java.util.List<Mole> moles;
+    private JSlider speedSlider;
+    private JButton startButton;
+    private int hiscore = 10;
         
-    protected void redraw(Graphics g) { // Redraws screen
+    protected void redraw(Graphics g) { // Redraws screen (may remove)
         
     }
     
@@ -27,20 +30,27 @@ public class Whack_A_Mole extends MouseAdapter implements Runnable
         
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
-        panel = new JPanel() {
+        mainPanel = new JPanel();
+        controlPanel = new JPanel();
+        
+        gamePanel = new JPanel() {
             @Override public void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 // Draw mole here
+                
+                
             }
         };
         
-        frame.add(panel);
+        mainPanel.add(controlPanel);
+        mainPanel.add(gamePanel);
+        
+        frame.add(mainPanel);
         frame.pack();
         frame.setVisible(true);
     }
     
-    @Override
-    public void mouseClicked(MouseEvent e) { 
+    @Override public void mouseClicked(MouseEvent e) { 
         // Checks if mouse is clicked over a visible mole
     }
     
