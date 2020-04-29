@@ -24,8 +24,8 @@ public class Mole extends Thread {
     protected JComponent container;
     protected Graphics graphic;
 
-    public Mole(int x, int y, JComponent container) {
-        this.x = x; this.y = y;
+    public Mole(int x, int y, boolean bonked ,JComponent container) {
+        this.x = x; this.y = y; this.bonked = bonked;
         this.container = container;
     }
 
@@ -43,7 +43,7 @@ public class Mole extends Thread {
             } catch (InterruptedException e) {}
 
             y = y + 2;
-            paint(graphic);
+            paintMole(graphic);
         }
         
         try {
@@ -56,11 +56,11 @@ public class Mole extends Thread {
             } catch (InterruptedException e) {}
 
             y = y - 2;
-            paint(graphic);
+            paintMole(graphic);
         }
     }
 
-    public void paint(Graphics g) {
+    public void paintMole(Graphics g) {
         if (!bonked) {
             // Paint a mole that was not hit.
             // Body
