@@ -26,7 +26,7 @@ public class WhackAMoleReference implements Runnable {
     private Color gameBack = new Color(0, 100, 0);
     private Color gameMid = new Color(0, 175, 0);
     private Color gameFront = new Color(0, 255, 0);
-    
+    private Color dirt = new Color(80, 50, 20);
     @Override public void run() {
         JFrame.setDefaultLookAndFeelDecorated(true);
 
@@ -46,13 +46,30 @@ public class WhackAMoleReference implements Runnable {
                 } catch (Exception e) {}
                 
                 g.setColor(gameBack);
-                g.fillRect(0, 350, gamePanel.getWidth(), gamePanel.getHeight());
+                g.fillRect(0, 350, gamePanel.getWidth(), gamePanel.getHeight());                
                 
                 g.setColor(gameMid);
                 g.fillRect(0, 450, gamePanel.getWidth(), gamePanel.getHeight());
                 
+                g.setColor(dirt);
+                g.fillOval(110, 450, 75, 35);
+                g.fillOval(300, 450, 75, 35);
+                g.setColor(Color.BLACK);
+                g.fillOval(110, 450, 75, 30);
+                g.fillOval(300, 450, 75, 30);
+                g.setColor(dirt);
+                
                 g.setColor(gameFront);
                 g.fillRect(0, 550, gamePanel.getWidth(), gamePanel.getHeight());
+                
+                g.setColor(dirt);
+                g.fillOval(35, 550, 75, 35);
+                g.fillOval(205, 550, 75, 35);
+                g.fillOval(375, 550, 75, 35);
+                g.setColor(Color.BLACK);
+                g.fillOval(35, 550, 75, 30);
+                g.fillOval(205, 550, 75, 30);
+                g.fillOval(375, 550, 75, 30);
             }
         };
         
