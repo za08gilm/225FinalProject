@@ -25,7 +25,7 @@ public class HammerCursorExample implements Runnable {
             @Override public void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 
-                setBackground(Color.BLUE);
+                // setBackground(Color.BLUE);
                 
                 Toolkit toolkit = Toolkit.getDefaultToolkit();
                 Image image = toolkit.getImage("mallet.png");

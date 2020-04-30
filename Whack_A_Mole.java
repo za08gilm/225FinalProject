@@ -46,7 +46,8 @@ public class Whack_A_Mole extends MouseAdapter implements Runnable
                 }
                 
                 for (Mole m : moles) {
-                    m.paintMole(g);                    
+                    //m.translate(m.getX(), m.getY() + 10);                    
+                    m.paintMole(g);
                 }
                 //mainPanel.repaint();
             }
