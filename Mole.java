@@ -19,12 +19,13 @@ public class Mole extends Thread {
     protected boolean escaped; // Did mole escape unharmed? (may remove)
     protected boolean moveUp; // Mole move up (may remove)
     protected boolean moveDown; // Mole move down (may remove)
+    protected boolean isUp;
     protected int x, y; // Coordinates where the mole will be drawn.
 
     protected JComponent container;
     protected Graphics graphic;
 
-    public Mole(int x, int y, boolean bonked ,JComponent container) {
+    public Mole(int x, int y, boolean bonked, JComponent container) {
         this.x = x; this.y = y; this.bonked = bonked;
         this.container = container;
     }
@@ -42,8 +43,9 @@ public class Mole extends Thread {
                 sleep(DELAY_TIME);
             } catch (InterruptedException e) {}
 
-            y = y + 2;
+            y = y + 5;
             paintMole(graphic);
+            
         }
 
         try {
@@ -55,8 +57,9 @@ public class Mole extends Thread {
                 sleep(DELAY_TIME);
             } catch (InterruptedException e) {}
 
-            y = y - 2;
+            y = y - 5;
             paintMole(graphic);
+            //container.repaint();
         }
     }
 
@@ -87,7 +90,30 @@ public class Mole extends Thread {
             g.drawOval(152, 210, 95, 75);
         } else {
             // Show that mole was hit (X's for eyes)
+            // Body
+            g.setColor(new Color(160, 82, 45));
+            g.fillOval(100, 100, MOLE, MOLE + 100); // Change x&y later
+            g.setColor(Color.BLACK);
+            g.drawOval(100, 100, MOLE, MOLE + 100);
+
+            // Nose
+            g.setColor(Color.PINK);
+            g.fillOval(152, 210, 95, 75);
+            g.setColor(Color.BLACK);
+            g.drawOval(152, 210, 95, 75);
+
+            Graphics2D g2 = (Graphics2D)g;
+            g2.setStroke(new BasicStroke(4));
+
+            // Left Eye
+            g2.drawLine(150, 150, 180, 200);                
+            g2.drawLine(150, 200, 180, 150);
+
+            // Right Eye
+            g2.drawLine(220, 150, 250, 200);                
+            g2.drawLine(220, 200, 250, 150);
         }
+        container.repaint();
     }
 
     public boolean bonked() {
