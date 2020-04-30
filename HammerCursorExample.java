@@ -16,7 +16,7 @@ public class HammerCursorExample implements Runnable {
     @Override public void run() {
         JFrame.setDefaultLookAndFeelDecorated(true);
 
-        JFrame frame = new JFrame("Mole");
+        JFrame frame = new JFrame("Hammer");
         frame.setPreferredSize(new Dimension(500, 500));
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -25,7 +25,7 @@ public class HammerCursorExample implements Runnable {
             @Override public void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 
-                setBackground(Color.RED);
+                setBackground(Color.BLUE);
                 
                 Toolkit toolkit = Toolkit.getDefaultToolkit();
                 Image image = toolkit.getImage("mallet.png");
