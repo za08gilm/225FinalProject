@@ -92,35 +92,43 @@ public class Mole extends Thread {
             g.setColor(Color.BLACK);
             g.drawOval(x + 52, y + 110, 95, 75);
         } else {
-            // // Show that mole was hit (X's for eyes)
-            // // Body
-            // g.setColor(new Color(160, 82, 45));
-            // g.fillOval(100, 100, MOLE, MOLE + 100); // Change x&y later
-            // g.setColor(Color.BLACK);
-            // g.drawOval(100, 100, MOLE, MOLE + 100);
+            // Show that mole was hit (X's for eyes)
+            // Body
+            g.setColor(new Color(160, 82, 45));
+            g.fillOval(x, y, MOLE, MOLE + 100); // Change x&y later
+            g.setColor(Color.BLACK);
+            g.drawOval(x, y, MOLE, MOLE + 100);
 
-            // // Nose
-            // g.setColor(Color.PINK);
-            // g.fillOval(152, 210, 95, 75);
-            // g.setColor(Color.BLACK);
-            // g.drawOval(152, 210, 95, 75);
+            // Nose
+            g.setColor(Color.PINK);
+            g.fillOval(x + 52, y + 110, 95, 75);
+            g.setColor(Color.BLACK);
+            g.drawOval(152, 210, 95, 75);
 
-            // Graphics2D g2 = (Graphics2D)g;
-            // g2.setStroke(new BasicStroke(4));
+            Graphics2D g2 = (Graphics2D)g;
+            g2.setStroke(new BasicStroke(4));
 
-            // // Left Eye
-            // g2.drawLine(150, 150, 180, 200);                
-            // g2.drawLine(150, 200, 180, 150);
+            // Left Eye
+            g2.drawLine(x + 50, y + 50, x + 80, y + 100);                
+            g2.drawLine(x + 50, y + 100, x + 80, y + 50);
 
-            // // Right Eye
-            // g2.drawLine(220, 150, 250, 200);                
-            // g2.drawLine(220, 200, 250, 150);
+            // Right Eye
+            g2.drawLine(x + 120, y + 50, x + 250, y + 100);                
+            g2.drawLine(x + 120, y + 100, x + 150, y + 50);
         }
         //container.repaint();
     }
 
     public boolean bonked() {
         return bonked;
+    }
+    
+    public int getX() {
+        return x;
+    }
+    
+    public int getY() {
+        return y;
     }
 
     public void setBonked(boolean b) {
