@@ -20,13 +20,15 @@ public class Mole extends Thread {
     protected boolean moveUp; // Mole move up (may remove)
     protected boolean moveDown; // Mole move down (may remove)
     protected boolean isUp;
-    protected int x, y; // Coordinates where the mole will be drawn.
+    protected int x = 100, y = 100; // Coordinates where the mole will be drawn.
 
     protected JComponent container;
     protected Graphics graphic;
 
     public Mole(int x, int y, boolean bonked, JComponent container) {
-        this.x = x; this.y = y; this.bonked = bonked;
+        this.x = x; 
+        this.y = y; 
+        this.bonked = bonked;
         this.container = container;
     }
 
@@ -68,26 +70,26 @@ public class Mole extends Thread {
             // Paint a mole that was not hit.
             // Body
             g.setColor(new Color(160, 82, 45));
-            g.fillOval(100, 100, MOLE, MOLE + 100); // Change x&y later
+            g.fillOval(x, y, MOLE, MOLE + 100); // Change x&y later
             g.setColor(Color.BLACK);
-            g.drawOval(100, 100, MOLE, MOLE + 100);
+            g.drawOval(x, y, MOLE, MOLE + 100);
 
             // Eyes
             g.setColor(Color.BLACK);
-            g.fillOval(141, 155, 30, 30); // Left eye
-            g.fillOval(226, 155, 30, 30); // Right eye
-            g.drawOval(141, 155, 30, 30); // Left Outline
-            g.drawOval(226, 155, 30, 30); // Right Outline
+            g.fillOval(x + 41, y + 55, 30, 30); // Left eye
+            g.fillOval(x + 126, y +  55, 30, 30); // Right eye
+            g.drawOval(x + 41, y + 55, 30, 30); // Left Outline
+            g.drawOval(x + 126, y + 55, 30, 30); // Right Outline
 
             g.setColor(Color.WHITE);
-            g.fillOval(141, 160, 15, 15); // Left Pupil
-            g.fillOval(226, 160, 15, 15); // Right Pupil
+            g.fillOval(x + 41, y + 60, 15, 15); // Left Pupil
+            g.fillOval(x + 126, y + 60, 15, 15); // Right Pupil
 
             // Nose
             g.setColor(Color.PINK);
-            g.fillOval(152, 210, 95, 75);
+            g.fillOval(x + 52, y + 110, 95, 75);
             g.setColor(Color.BLACK);
-            g.drawOval(152, 210, 95, 75);
+            g.drawOval(x + 52, y + 110, 95, 75);
         } else {
             // Show that mole was hit (X's for eyes)
             // Body
@@ -113,7 +115,7 @@ public class Mole extends Thread {
             g2.drawLine(220, 150, 250, 200);                
             g2.drawLine(220, 200, 250, 150);
         }
-        container.repaint();
+        //container.repaint();
     }
 
     public boolean bonked() {
