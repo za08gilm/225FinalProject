@@ -31,35 +31,24 @@ public class MoleBonkReference implements Runnable {
                 g.fillOval(100, 100, MOLE, MOLE + 100); // Change x&y later
                 g.setColor(Color.BLACK);
                 g.drawOval(100, 100, MOLE, MOLE + 100);
-
-                // Left Eye
-                g.drawLine(150, 150, 180, 200);
-                g.drawLine(151, 150, 181, 200);
-                g.drawLine(152, 150, 182, 200);
-                g.drawLine(153, 150, 183, 200);
-                
-                g.drawLine(150, 200, 180, 150);
-                g.drawLine(151, 200, 180, 151);
-                g.drawLine(152, 200, 180, 152);
-                g.drawLine(153, 200, 180, 153);
-                
-                // Right Eye
-                g.drawLine(220, 150, 250, 200);
-                g.drawLine(221, 150, 251, 200);
-                g.drawLine(222, 150, 252, 200);
-                g.drawLine(223, 150, 253, 200);
-                
-                g.drawLine(220, 200, 250, 150);
-                g.drawLine(221, 200, 250, 151);
-                g.drawLine(222, 200, 250, 152);
-                g.drawLine(223, 200, 250, 153);
                 
                 // Nose
                 g.setColor(Color.PINK);
                 g.fillOval(152, 210, 95, 75);
                 g.setColor(Color.BLACK);
                 g.drawOval(152, 210, 95, 75);
-                g.fillOval(173, 215, 50, 40);
+
+                Graphics2D g2 = (Graphics2D)g;
+                g2.setStroke(new BasicStroke(4));
+                
+                // Left Eye
+                g2.drawLine(150, 150, 180, 200);                
+                g2.drawLine(150, 200, 180, 150);
+                
+                
+                // Right Eye
+                g2.drawLine(220, 150, 250, 200);                
+                g2.drawLine(220, 200, 250, 150);
             }
         };
 

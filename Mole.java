@@ -45,11 +45,11 @@ public class Mole extends Thread {
             y = y + 2;
             paintMole(graphic);
         }
-        
+
         try {
             sleep(ABOVE_TIME);
         } catch (InterruptedException e) {}
-        
+
         for (int i = 0; i < 16; i++) {
             try {
                 sleep(DELAY_TIME);
@@ -65,26 +65,26 @@ public class Mole extends Thread {
             // Paint a mole that was not hit.
             // Body
             g.setColor(new Color(160, 82, 45));
-            g.fillOval(x, y, MOLE, MOLE + 100); // Change x&y later
+            g.fillOval(100, 100, MOLE, MOLE + 100); // Change x&y later
             g.setColor(Color.BLACK);
-            g.drawOval(x, y, MOLE, MOLE + 100);
+            g.drawOval(100, 100, MOLE, MOLE + 100);
 
             // Eyes
-            g.setColor(Color.WHITE);
-            g.fillOval(x + 41, y + 55, 30, 30); // Left eye
-            g.fillOval(x + 126, y + 55, 30, 30); // Right eye
             g.setColor(Color.BLACK);
-            g.drawOval(x + 41, y + 55, 30, 30); // Left Outline
-            g.drawOval(x + 126, y + 55, 30, 30); // Right Outline
-            g.fillOval(x + 46, y + 60, 20, 20); // Left Pupil
-            g.fillOval(x + 131, y + 60, 20, 20); // Right Pupil
+            g.fillOval(141, 155, 30, 30); // Left eye
+            g.fillOval(226, 155, 30, 30); // Right eye
+            g.drawOval(141, 155, 30, 30); // Left Outline
+            g.drawOval(226, 155, 30, 30); // Right Outline
+
+            g.setColor(Color.WHITE);
+            g.fillOval(141, 160, 15, 15); // Left Pupil
+            g.fillOval(226, 160, 15, 15); // Right Pupil
 
             // Nose
             g.setColor(Color.PINK);
-            g.fillOval(x + 52, y + 110, 95, 75);
+            g.fillOval(152, 210, 95, 75);
             g.setColor(Color.BLACK);
-            g.drawOval(x + 52, y + 110, 95, 75);
-            g.fillOval(x + 73, y + 115, 50, 40);
+            g.drawOval(152, 210, 95, 75);
         } else {
             // Show that mole was hit (X's for eyes)
         }

@@ -33,21 +33,21 @@ public class MoleReference implements Runnable {
                 g.drawOval(100, 100, MOLE, MOLE + 100);
 
                 // Eyes
-                g.setColor(Color.WHITE);
+                g.setColor(Color.BLACK);
                 g.fillOval(141, 155, 30, 30); // Left eye
                 g.fillOval(226, 155, 30, 30); // Right eye
-                g.setColor(Color.BLACK);
                 g.drawOval(141, 155, 30, 30); // Left Outline
                 g.drawOval(226, 155, 30, 30); // Right Outline
-                g.fillOval(146, 160, 20, 20); // Left Pupil
-                g.fillOval(231, 160, 20, 20); // Right Pupil
+                
+                g.setColor(Color.WHITE);
+                g.fillOval(141, 160, 15, 15); // Left Pupil
+                g.fillOval(226, 160, 15, 15); // Right Pupil
                 
                 // Nose
                 g.setColor(Color.PINK);
                 g.fillOval(152, 210, 95, 75);
                 g.setColor(Color.BLACK);
                 g.drawOval(152, 210, 95, 75);
-                g.fillOval(173, 215, 50, 40);
             }
         };
 
