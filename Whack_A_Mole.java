@@ -74,8 +74,7 @@ public class Whack_A_Mole extends MouseAdapter implements Runnable
                 if (m.isUp()) {
                     if ((p.x >= m.getX() && p.x <= m.getX() + 200) 
                     && (p.y >= m.getY() && p.y <= m.getY() + 300)) {
-                        isWithinMole = true;
-                        //m.setBonked(true);
+                        m.setBonked(true);
                     }
                 }
             }
@@ -83,9 +82,9 @@ public class Whack_A_Mole extends MouseAdapter implements Runnable
         p = null;
     }
 
-    protected static boolean isWithinMole() {
-        return isWithinMole;
-    }
+    // protected static boolean isWithinMole() {
+        // return isWithinMole;
+    // }
 
     public void redraw(Graphics g) {
         for (Mole m : moles) {
@@ -97,8 +96,9 @@ public class Whack_A_Mole extends MouseAdapter implements Runnable
         // Final product will construct 5 moles at diff. locations.
         // (Look at WhackAMoleReference)
 
-        Mole mole1 = new Mole(75, 450, mainPanel); moles.add(mole1);
+        Mole mole1 = new Mole(25, 450, mainPanel); moles.add(mole1);
         Mole mole2 = new Mole(300, 450, mainPanel); moles.add(mole2);
+        Mole mole3 = new Mole(550, 450, mainPanel); moles.add(mole3);
 
         for (Mole m : moles) {
             m.start();

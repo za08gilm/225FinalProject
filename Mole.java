@@ -57,18 +57,9 @@ public class Mole extends Thread {
         }
 
         isUp = true;
-        for (int i = 0; i < 152; i++) {
-            try {
-                sleep(DELAY_TIME);
-            } catch (InterruptedException e) {}
-            
-            if (Whack_A_Mole.isWithinMole()) {
-                bonked = true;
-                //container.repaint();
-                //paintMole(graphic);
-            }
-            //bonked = true;
-        }
+        try {
+            sleep(ABOVE_TIME);
+        } catch (InterruptedException e) {}
         isUp = false;
 
         for (int i = 0; i < 16; i++) {
@@ -130,7 +121,7 @@ public class Mole extends Thread {
             // Right Eye
             g2.drawLine(x + 120, y + 50, x + 250, y + 100);                
             g2.drawLine(x + 120, y + 100, x + 150, y + 50);
-            
+
             g2.setStroke(new BasicStroke(1));
         }
         //container.repaint();
@@ -139,7 +130,7 @@ public class Mole extends Thread {
     public boolean bonked() {
         return bonked;
     }
-    
+
     public void setBonked(boolean b) {
         bonked = b;
     }
