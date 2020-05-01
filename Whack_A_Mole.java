@@ -68,7 +68,7 @@ public class Whack_A_Mole extends MouseAdapter implements Runnable
         // Final product will construct 5 moles at diff. locations.
         // (Look at WhackAMoleReference)
         
-        Mole newMole = new Mole(100, 100, mainPanel);
+        Mole newMole = new Mole(150, 450, mainPanel);
         moles.add(newMole);
         newMole.start();
     }

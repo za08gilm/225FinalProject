@@ -14,6 +14,7 @@ public class Mole extends Thread {
     public static final int DELAY_TIME = 33; // Delay time between animations.
     public static final int ABOVE_TIME = 5000; // Time spent above hole.
     public static final int MOLE = 200; // Size of the mole
+    protected boolean isRunning = true;
 
     protected boolean bonked; // Was mole hit?
     protected boolean moveUp; // Mole move up (may remove)
@@ -33,6 +34,12 @@ public class Mole extends Thread {
     }
 
     public void run() {
+        while (isRunning) {
+            moveMole();
+        }
+    }
+    
+    public void moveMole() {
         Random rand = new Random();
         int waitTime = rand.nextInt(1500) + 1000;
 
@@ -46,8 +53,6 @@ public class Mole extends Thread {
             } catch (InterruptedException e) {}
 
             y = y - 10;
-            //container.repaint();
-
         }
         
         isUp = true;
@@ -61,8 +66,6 @@ public class Mole extends Thread {
             } catch (InterruptedException e) {}
 
             y = y + 10;
-            //paintMole(graphic);
-            //container.repaint();
         }
     }
 
