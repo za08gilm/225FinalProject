@@ -35,7 +35,7 @@ public class Whack_A_Mole extends MouseAdapter implements Runnable {
         JFrame.setDefaultLookAndFeelDecorated(true);
 
         JFrame frame = new JFrame("Whack A Mole!");
-        frame.setPreferredSize(new Dimension(750, 750));
+        frame.setPreferredSize(new Dimension(500, 750));
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -131,8 +131,8 @@ public class Whack_A_Mole extends MouseAdapter implements Runnable {
         // (Look at WhackAMoleReference)
 
         Mole mole1 = new Mole(35, 600, mainPanel); moles.add(mole1);
-        // Mole mole2 = new Mole(300, 450, mainPanel); moles.add(mole2);
-        // Mole mole3 = new Mole(550, 450, mainPanel); moles.add(mole3);
+        Mole mole2 = new Mole(205, 600, mainPanel); moles.add(mole2);
+        Mole mole3 = new Mole(375, 600, mainPanel); moles.add(mole3);
 
         for (Mole m : moles) {
             m.start();
