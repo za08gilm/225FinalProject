@@ -14,6 +14,7 @@ public class MoleBonkReference implements Runnable {
     private static final int MOLE = 200;
     private JPanel panel;
     
+    
     @Override public void run() {
         JFrame.setDefaultLookAndFeelDecorated(true);
 

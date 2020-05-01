@@ -24,6 +24,7 @@ public class Mole extends Thread {
 
     protected JComponent container;
     protected Graphics graphic;
+    protected MouseEvent e;
 
     public Mole(int x, int y, JComponent container) {
         this.x = x; 
@@ -38,7 +39,7 @@ public class Mole extends Thread {
             moveMole();
         }
     }
-    
+
     public void moveMole() {
         Random rand = new Random();
         int waitTime = rand.nextInt(1500) + 1000;
@@ -54,11 +55,18 @@ public class Mole extends Thread {
 
             y = y - 10;
         }
-        
+
         isUp = true;
-        try {
-            sleep(ABOVE_TIME);
-        } catch (InterruptedException e) {}
+        for (int i = 0; i < 152; i++) {
+            try {
+                sleep(DELAY_TIME);
+            } catch (InterruptedException e) {}
+            
+            if (bonked) {
+                break;
+            }
+        }
+        isUp = false;
 
         for (int i = 0; i < 16; i++) {
             try {
@@ -126,16 +134,19 @@ public class Mole extends Thread {
         return bonked;
     }
     
-    public int getX() {
-        return x;
-    }
-    
-    public int getY() {
-        return y;
-    }
-
     public void setBonked(boolean b) {
         bonked = b;
     }
 
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public boolean isUp() {
+        return isUp;
+    }
 }
