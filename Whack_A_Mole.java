@@ -16,19 +16,19 @@ import javax.imageio.ImageIO;
  */
 public class Whack_A_Mole extends MouseAdapter implements Runnable {
     // Instance variables go here
-    
+
     private Color gameBack = new Color(0, 100, 0);
     private Color gameMid = new Color(0, 175, 0);
     private Color gameFront = new Color(0, 255, 0);
     private Color dirt = new Color(80, 50, 20);
-    
+
     private JPanel gamePanel, controlPanel, numbersPanel, actionPanel, mainPanel;
     protected java.util.List<Mole> moles = new java.util.ArrayList<Mole>();
     private JSlider speedSlider;
     private JButton startButton;
     private int hiscore = 10;
     protected Point p;
-       
+
     protected static boolean isWithinMole = false;
 
     @Override public void run() {
@@ -51,13 +51,18 @@ public class Whack_A_Mole extends MouseAdapter implements Runnable {
                 try {
                     g.drawImage(ImageIO.read(new File("sky.jpg")), 0, 0, null);
                 } catch (Exception e) {}
-                
+
                 g.setColor(gameBack);
                 g.fillRect(0, 350, gamePanel.getWidth(), gamePanel.getHeight());                
+
+                for (int j = 0; j < 2; j++) {
+                    Mole m = moles.get(j);
+                    m.paintMole(g);
+                }
                 
                 g.setColor(gameMid);
                 g.fillRect(0, 450, gamePanel.getWidth(), gamePanel.getHeight());
-                
+
                 g.setColor(dirt);
                 g.fillOval(110, 450, 75, 35);
                 g.fillOval(300, 450, 75, 35);
@@ -65,10 +70,15 @@ public class Whack_A_Mole extends MouseAdapter implements Runnable {
                 g.fillOval(110, 450, 75, 30);
                 g.fillOval(300, 450, 75, 30);
                 g.setColor(dirt);
-                
+
+                for (int i = 2; i < 5; i++) {
+                    Mole m = moles.get(i);
+                    m.paintMole(g);
+                }
+
                 g.setColor(gameFront);
                 g.fillRect(0, 550, gamePanel.getWidth(), gamePanel.getHeight());
-                
+
                 g.setColor(dirt);
                 g.fillOval(35, 550, 75, 35);
                 g.fillOval(205, 550, 75, 35);
@@ -77,18 +87,13 @@ public class Whack_A_Mole extends MouseAdapter implements Runnable {
                 g.fillOval(35, 550, 75, 30);
                 g.fillOval(205, 550, 75, 30);
                 g.fillOval(375, 550, 75, 30);
-                
+
                 Toolkit toolkit = Toolkit.getDefaultToolkit();
                 Image image = toolkit.getImage("mallet.png");
                 Cursor c = toolkit.createCustomCursor(image, 
                         new Point(gamePanel.getX(), gamePanel.getY()), "img");
                 gamePanel.setCursor(c);
 
-                int index = 0;
-                while (index < moles.size()) {
-                    Mole m = moles.get(index);
-                    m.paintMole(g); index++;
-                }
                 redraw(g);
             }
         };
@@ -129,11 +134,13 @@ public class Whack_A_Mole extends MouseAdapter implements Runnable {
     public void start() {
         // Final product will construct 5 moles at diff. locations.
         // (Look at WhackAMoleReference)
-
-        Mole mole1 = new Mole(35, 600, mainPanel); moles.add(mole1);
-        Mole mole2 = new Mole(205, 600, mainPanel); moles.add(mole2);
-        Mole mole3 = new Mole(375, 600, mainPanel); moles.add(mole3);
-
+        
+        Mole mole1 = new Mole(115, 500, mainPanel); moles.add(mole1);
+        Mole mole2 = new Mole(300, 500, mainPanel); moles.add(mole2);
+        Mole mole3 = new Mole( 35, 600, mainPanel); moles.add(mole3);
+        Mole mole4 = new Mole(205, 600, mainPanel); moles.add(mole4);
+        Mole mole5 = new Mole(375, 600, mainPanel); moles.add(mole5);
+        
         for (Mole m : moles) {
             m.start();
         }
