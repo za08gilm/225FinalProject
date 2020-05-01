@@ -3,23 +3,32 @@ import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
 import javax.swing.event.*;
-import java.awt.geom.Point2D;
+
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 /**
  * Write a description of class Whack_A_Mole here.
  *
  * @author Zack, Mark, Roeldi, Colin, Patrick
  * @version Spring 2020
  */
-public class Whack_A_Mole extends MouseAdapter implements Runnable  
-{
+public class Whack_A_Mole extends MouseAdapter implements Runnable {
     // Instance variables go here
-    private JPanel mainPanel; //gamePanel, controlPanel;
+    
+    private Color gameBack = new Color(0, 100, 0);
+    private Color gameMid = new Color(0, 175, 0);
+    private Color gameFront = new Color(0, 255, 0);
+    private Color dirt = new Color(80, 50, 20);
+    
+    private JPanel gamePanel, controlPanel, numbersPanel, actionPanel, mainPanel;
     protected java.util.List<Mole> moles = new java.util.ArrayList<Mole>();
     private JSlider speedSlider;
     private JButton startButton;
     private int hiscore = 10;
     protected Point p;
-   
+       
     protected static boolean isWithinMole = false;
 
     @Override public void run() {
@@ -35,15 +44,45 @@ public class Whack_A_Mole extends MouseAdapter implements Runnable
 
         start();
 
-        mainPanel = new JPanel() {
+        gamePanel = new JPanel() {
             @Override public void paintComponent(Graphics g) {
                 super.paintComponent(g);
 
+                try {
+                    g.drawImage(ImageIO.read(new File("sky.jpg")), 0, 0, null);
+                } catch (Exception e) {}
+                
+                g.setColor(gameBack);
+                g.fillRect(0, 350, gamePanel.getWidth(), gamePanel.getHeight());                
+                
+                g.setColor(gameMid);
+                g.fillRect(0, 450, gamePanel.getWidth(), gamePanel.getHeight());
+                
+                g.setColor(dirt);
+                g.fillOval(110, 450, 75, 35);
+                g.fillOval(300, 450, 75, 35);
+                g.setColor(Color.BLACK);
+                g.fillOval(110, 450, 75, 30);
+                g.fillOval(300, 450, 75, 30);
+                g.setColor(dirt);
+                
+                g.setColor(gameFront);
+                g.fillRect(0, 550, gamePanel.getWidth(), gamePanel.getHeight());
+                
+                g.setColor(dirt);
+                g.fillOval(35, 550, 75, 35);
+                g.fillOval(205, 550, 75, 35);
+                g.fillOval(375, 550, 75, 35);
+                g.setColor(Color.BLACK);
+                g.fillOval(35, 550, 75, 30);
+                g.fillOval(205, 550, 75, 30);
+                g.fillOval(375, 550, 75, 30);
+                
                 Toolkit toolkit = Toolkit.getDefaultToolkit();
                 Image image = toolkit.getImage("mallet.png");
                 Cursor c = toolkit.createCustomCursor(image, 
-                        new Point(mainPanel.getX(), mainPanel.getY()), "img");
-                mainPanel.setCursor(c);
+                        new Point(gamePanel.getX(), gamePanel.getY()), "img");
+                gamePanel.setCursor(c);
 
                 int index = 0;
                 while (index < moles.size()) {
@@ -57,15 +96,14 @@ public class Whack_A_Mole extends MouseAdapter implements Runnable
         //mainPanel.add(controlPanel);
         //mainPanel.add(gamePanel);
 
-        mainPanel.addMouseListener(this);
-        frame.add(mainPanel);
+        gamePanel.addMouseListener(this);
+        frame.add(gamePanel);
         frame.pack();
         frame.setVisible(true);
     }
 
     @Override public void mouseClicked(MouseEvent e) { 
         // Checks if mouse is clicked over a visible mole
-
         if (e.getButton() == MouseEvent.BUTTON1) {
             p = e.getPoint();
             for (Mole m : moles) {
@@ -88,7 +126,7 @@ public class Whack_A_Mole extends MouseAdapter implements Runnable
 
     public void redraw(Graphics g) {
         for (Mole m : moles) {
-            mainPanel.repaint();
+            gamePanel.repaint();
         }
     }
 
@@ -96,9 +134,9 @@ public class Whack_A_Mole extends MouseAdapter implements Runnable
         // Final product will construct 5 moles at diff. locations.
         // (Look at WhackAMoleReference)
 
-        Mole mole1 = new Mole(25, 450, mainPanel); moles.add(mole1);
-        Mole mole2 = new Mole(300, 450, mainPanel); moles.add(mole2);
-        Mole mole3 = new Mole(550, 450, mainPanel); moles.add(mole3);
+        Mole mole1 = new Mole(35, 600, mainPanel); moles.add(mole1);
+        // Mole mole2 = new Mole(300, 450, mainPanel); moles.add(mole2);
+        // Mole mole3 = new Mole(550, 450, mainPanel); moles.add(mole3);
 
         for (Mole m : moles) {
             m.start();

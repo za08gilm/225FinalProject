@@ -13,7 +13,7 @@ public class Mole extends Thread {
 
     public static final int DELAY_TIME = 33; // Delay time between animations.
     public static final int ABOVE_TIME = 5000; // Time spent above hole.
-    public static final int MOLE = 200; // Size of the mole
+    public static final int MOLE = 75; // Size of the mole
     protected boolean isRunning = true;
 
     protected boolean bonked; // Was mole hit?
@@ -83,20 +83,20 @@ public class Mole extends Thread {
 
             // Eyes
             g.setColor(Color.BLACK);
-            g.fillOval(x + 41, y + 55, 30, 30); // Left eye
-            g.fillOval(x + 126, y +  55, 30, 30); // Right eye
-            g.drawOval(x + 41, y + 55, 30, 30); // Left Outline
-            g.drawOval(x + 126, y + 55, 30, 30); // Right Outline
+            g.fillOval(x + 41, y + 55, MOLE / 6, MOLE / 6); // Left eye
+            g.fillOval(x + 126, y +  55, MOLE / 6, MOLE / 6); // Right eye
+            g.drawOval(x + 41, y + 55, MOLE / 6, MOLE / 6); // Left Outline
+            g.drawOval(x + 126, y + 55, MOLE / 6, MOLE / 6); // Right Outline
 
             g.setColor(Color.WHITE);
-            g.fillOval(x + 41, y + 60, 15, 15); // Left Pupil
-            g.fillOval(x + 126, y + 60, 15, 15); // Right Pupil
+            g.fillOval(x + 41, y + 60, MOLE / 12, MOLE / 12); // Left Pupil
+            g.fillOval(x + 126, y + 60, MOLE / 12, MOLE / 12); // Right Pupil
 
             // Nose
             g.setColor(Color.PINK);
-            g.fillOval(x + 52, y + 110, 95, 75);
+            g.fillOval(x + 52, y + 110, MOLE / 2, MOLE / 3);
             g.setColor(Color.BLACK);
-            g.drawOval(x + 52, y + 110, 95, 75);
+            g.drawOval(x + 52, y + 110, MOLE / 2, MOLE / 3);
         } else {
             // Show that mole was hit (X's for eyes)
             // Body
@@ -107,9 +107,9 @@ public class Mole extends Thread {
 
             // Nose
             g.setColor(Color.PINK);
-            g.fillOval(x + 52, y + 110, 95, 75);
+            g.fillOval(x + 52, y + 110, MOLE / 2, MOLE / 3);
             g.setColor(Color.BLACK);
-            g.drawOval(152, 210, 95, 75);
+            g.drawOval(152, 210, MOLE / 2, MOLE / 3);
 
             Graphics2D g2 = (Graphics2D)g;
             g2.setStroke(new BasicStroke(4));
