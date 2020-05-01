@@ -12,7 +12,7 @@ import javax.swing.event.*;
 public class Mole extends Thread {
 
     public static final int DELAY_TIME = 33; // Delay time between animations.
-    public static final int ABOVE_TIME = 1500; // Time spent above hole.
+    public static final int ABOVE_TIME = 5000; // Time spent above hole.
     public static final int MOLE = 200; // Size of the mole
 
     protected boolean bonked; // Was mole hit?

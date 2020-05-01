@@ -17,12 +17,6 @@ public class Whack_A_Mole extends MouseAdapter implements Runnable
     private JSlider speedSlider;
     private JButton startButton;
     private int hiscore = 10;
-        
-    // protected void redraw(Graphics g) { // Redraws screen (may remove)
-        // for (Mole m : moles) {
-            // m.paintMole(g);
-        // }
-    // }
     
     @Override public void run() {
         JFrame.setDefaultLookAndFeelDecorated(true);
@@ -61,9 +55,19 @@ public class Whack_A_Mole extends MouseAdapter implements Runnable
     
     @Override public void mouseClicked(MouseEvent e) { 
         // Checks if mouse is clicked over a visible mole
+        if (e.getButton() == MouseEvent.BUTTON1) {
+            Point p = e.getPoint();
+            for (Mole m : moles) {
+                // Check if isUp is true and if p coordinates are within 
+                // mole dimensions.
+            }
+        }
     }
     
     public void start() {
+        // Final product will construct 5 moles at diff. locations.
+        // (Look at WhackAMoleReference)
+        
         Mole newMole = new Mole(100, 100, mainPanel);
         moles.add(newMole);
         newMole.start();
