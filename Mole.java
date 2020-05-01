@@ -20,7 +20,7 @@ public class Mole extends Thread {
     protected boolean moveUp; // Mole move up (may remove)
     protected boolean moveDown; // Mole move down (may remove)
     protected boolean isUp;
-    protected int x = 100, y = 100; // Coordinates where the mole will be drawn.
+    protected int x, y; // Coordinates where the mole will be drawn.
 
     protected JComponent container;
     protected Graphics graphic;
@@ -62,9 +62,12 @@ public class Mole extends Thread {
                 sleep(DELAY_TIME);
             } catch (InterruptedException e) {}
             
-            if (bonked) {
-                break;
+            if (Whack_A_Mole.isWithinMole()) {
+                bonked = true;
+                //container.repaint();
+                //paintMole(graphic);
             }
+            //bonked = true;
         }
         isUp = false;
 
@@ -75,6 +78,7 @@ public class Mole extends Thread {
 
             y = y + 10;
         }
+        bonked = false;
     }
 
     public void paintMole(Graphics g) {
@@ -126,6 +130,8 @@ public class Mole extends Thread {
             // Right Eye
             g2.drawLine(x + 120, y + 50, x + 250, y + 100);                
             g2.drawLine(x + 120, y + 100, x + 150, y + 50);
+            
+            g2.setStroke(new BasicStroke(1));
         }
         //container.repaint();
     }
