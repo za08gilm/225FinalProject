@@ -18,11 +18,11 @@ public class Whack_A_Mole extends MouseAdapter implements Runnable
     private JButton startButton;
     private int hiscore = 10;
         
-    protected void redraw(Graphics g) { // Redraws screen (may remove)
-        for (Mole m : moles) {
-            m.paintMole(g);
-        }
-    }
+    // protected void redraw(Graphics g) { // Redraws screen (may remove)
+        // for (Mole m : moles) {
+            // m.paintMole(g);
+        // }
+    // }
     
     @Override public void run() {
         JFrame.setDefaultLookAndFeelDecorated(true);
@@ -35,21 +35,19 @@ public class Whack_A_Mole extends MouseAdapter implements Runnable
         //mainPanel = new JPanel();
         //controlPanel = new JPanel();
         
+        start();
+        
         mainPanel = new JPanel() {
             @Override public void paintComponent(Graphics g) {
                 super.paintComponent(g);
-               
-                for (int i = 0; i < 1; i++) {
-                    Mole mole = new Mole(100, 100, false, mainPanel);
-                    moles.add(mole);
-                    mole.start();
+                
+                int index = 0;
+                while (index < moles.size()) {
+                    Mole m = moles.get(index);
+                    m.paintMole(g); index++;
                 }
                 
-                for (Mole m : moles) {
-                    //m.translate(m.getX(), m.getY() + 10);                    
-                    m.paintMole(g);
-                }
-                //mainPanel.repaint();
+                mainPanel.repaint();
             }
         };
         
@@ -63,6 +61,12 @@ public class Whack_A_Mole extends MouseAdapter implements Runnable
     
     @Override public void mouseClicked(MouseEvent e) { 
         // Checks if mouse is clicked over a visible mole
+    }
+    
+    public void start() {
+        Mole newMole = new Mole(100, 100, mainPanel);
+        moles.add(newMole);
+        newMole.start();
     }
     
     public static void main(String[] args) {       

@@ -24,10 +24,10 @@ public class Mole extends Thread {
     protected JComponent container;
     protected Graphics graphic;
 
-    public Mole(int x, int y, boolean bonked, JComponent container) {
+    public Mole(int x, int y, JComponent container) {
         this.x = x; 
         this.y = y; 
-        this.bonked = bonked;
+        bonked = false;
         isUp = false;
         this.container = container;
     }
@@ -46,7 +46,7 @@ public class Mole extends Thread {
             } catch (InterruptedException e) {}
 
             y = y - 10;
-            container.repaint();
+            //container.repaint();
 
         }
         
@@ -62,7 +62,7 @@ public class Mole extends Thread {
 
             y = y + 10;
             //paintMole(graphic);
-            container.repaint();
+            //container.repaint();
         }
     }
 
