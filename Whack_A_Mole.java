@@ -35,6 +35,12 @@ public class Whack_A_Mole extends MouseAdapter implements Runnable
             @Override public void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 
+                Toolkit toolkit = Toolkit.getDefaultToolkit();
+                Image image = toolkit.getImage("mallet.png");
+                Cursor c = toolkit.createCustomCursor(image, 
+                new Point(mainPanel.getX(), mainPanel.getY()), "img");
+                mainPanel.setCursor(c);
+                
                 int index = 0;
                 while (index < moles.size()) {
                     Mole m = moles.get(index);
