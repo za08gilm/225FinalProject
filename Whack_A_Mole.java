@@ -110,8 +110,8 @@ public class Whack_A_Mole extends MouseAdapter implements Runnable {
                 // Check if isUp is true and if p coordinates are within 
                 // mole dimensions.
                 if (m.isUp()) {
-                    if ((p.x >= m.getX() && p.x <= m.getX() + 200) 
-                    && (p.y >= m.getY() && p.y <= m.getY() + 300)) {
+                    if ((p.x >= m.getX() && p.x <= m.getX() + 75) 
+                    && (p.y >= m.getY() && p.y <= m.getY() + 175)) {
                         m.setBonked(true);
                     }
                 }
@@ -119,10 +119,6 @@ public class Whack_A_Mole extends MouseAdapter implements Runnable {
         }
         p = null;
     }
-
-    // protected static boolean isWithinMole() {
-        // return isWithinMole;
-    // }
 
     public void redraw(Graphics g) {
         for (Mole m : moles) {

@@ -12,7 +12,7 @@ import javax.swing.event.*;
 public class Mole extends Thread {
 
     public static final int DELAY_TIME = 33; // Delay time between animations.
-    public static final int ABOVE_TIME = 5000; // Time spent above hole.
+    public static final int ABOVE_TIME = 2000; // Time spent above hole.
     public static final int MOLE = 75; // Size of the mole
     protected boolean isRunning = true;
 
@@ -42,7 +42,7 @@ public class Mole extends Thread {
 
     public void moveMole() {
         Random rand = new Random();
-        int waitTime = rand.nextInt(1500) + 1000;
+        int waitTime = rand.nextInt(7500) + 1000;
 
         try {
             sleep(waitTime);
@@ -83,20 +83,20 @@ public class Mole extends Thread {
 
             // Eyes
             g.setColor(Color.BLACK);
-            g.fillOval(x + 41, y + 55, MOLE / 6, MOLE / 6); // Left eye
-            g.fillOval(x + 126, y +  55, MOLE / 6, MOLE / 6); // Right eye
-            g.drawOval(x + 41, y + 55, MOLE / 6, MOLE / 6); // Left Outline
-            g.drawOval(x + 126, y + 55, MOLE / 6, MOLE / 6); // Right Outline
+            g.fillOval(x + 15, y + 30, MOLE / 6, MOLE / 6); // Left eye
+            g.fillOval(x + 50, y +  30, MOLE / 6, MOLE / 6); // Right eye
+            g.drawOval(x + 15, y + 30, MOLE / 6, MOLE / 6); // Left Outline
+            g.drawOval(x + 50, y + 30, MOLE / 6, MOLE / 6); // Right Outline
 
             g.setColor(Color.WHITE);
-            g.fillOval(x + 41, y + 60, MOLE / 12, MOLE / 12); // Left Pupil
-            g.fillOval(x + 126, y + 60, MOLE / 12, MOLE / 12); // Right Pupil
+            g.fillOval(x + 15, y + 30, MOLE / 12, MOLE / 12); // Left Pupil
+            g.fillOval(x + 50, y + 30, MOLE / 12, MOLE / 12); // Right Pupil
 
             // Nose
             g.setColor(Color.PINK);
-            g.fillOval(x + 52, y + 110, MOLE / 2, MOLE / 3);
+            g.fillOval(x + 20, y + 50, MOLE / 2, MOLE / 3);
             g.setColor(Color.BLACK);
-            g.drawOval(x + 52, y + 110, MOLE / 2, MOLE / 3);
+            g.drawOval(x + 20, y + 50, MOLE / 2, MOLE / 3);
         } else {
             // Show that mole was hit (X's for eyes)
             // Body
@@ -107,28 +107,24 @@ public class Mole extends Thread {
 
             // Nose
             g.setColor(Color.PINK);
-            g.fillOval(x + 52, y + 110, MOLE / 2, MOLE / 3);
+            g.fillOval(x + 20, y + 50, MOLE / 2, MOLE / 3);
             g.setColor(Color.BLACK);
-            g.drawOval(152, 210, MOLE / 2, MOLE / 3);
+            g.drawOval(x + 20, y + 50, MOLE / 2, MOLE / 3);
 
             Graphics2D g2 = (Graphics2D)g;
             g2.setStroke(new BasicStroke(4));
 
             // Left Eye
-            g2.drawLine(x + 50, y + 50, x + 80, y + 100);                
-            g2.drawLine(x + 50, y + 100, x + 80, y + 50);
+            g2.drawLine(x + 15, y + 30, x + 25, y + 40);                
+            g2.drawLine(x + 15, y + 40, x + 25, y + 30);
 
             // Right Eye
-            g2.drawLine(x + 120, y + 50, x + 250, y + 100);                
-            g2.drawLine(x + 120, y + 100, x + 150, y + 50);
+            g2.drawLine(x + 50, y + 30, x + 60, y + 40);                
+            g2.drawLine(x + 50, y + 40, x + 60, y + 30);
 
             g2.setStroke(new BasicStroke(1));
         }
         //container.repaint();
-    }
-
-    public boolean bonked() {
-        return bonked;
     }
 
     public void setBonked(boolean b) {
