@@ -27,9 +27,10 @@ public class Whack_A_Mole extends MouseAdapter implements Runnable {
     private JSlider speedSlider;
     private JButton startButton;
     protected Point p;
-    private int time = 60, score = 0, hiscore = 10;
+    private long time = 60;
+    private int score = 0, hiscore = 10;
     private JLabel nameTop, nameMid, nameBot, timer, playerScore, hiScore;
-    private boolean start;
+    private boolean start = false;
 
     @Override public void run() {
         JFrame.setDefaultLookAndFeelDecorated(true);
@@ -40,7 +41,7 @@ public class Whack_A_Mole extends MouseAdapter implements Runnable {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         mainPanel = new JPanel(new BorderLayout());
-        
+
         start();
 
         gamePanel = new JPanel() {
@@ -58,7 +59,7 @@ public class Whack_A_Mole extends MouseAdapter implements Runnable {
                     Mole m = moles.get(j);
                     m.paintMole(g);
                 }
-                
+
                 g.setColor(gameMid);
                 g.fillRect(0, 450, gamePanel.getWidth(), gamePanel.getHeight());
 
@@ -96,73 +97,84 @@ public class Whack_A_Mole extends MouseAdapter implements Runnable {
                 redraw(g);
             }
         };
-        
+
         controlPanel = new JPanel(new BorderLayout()) {
             @Override public void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 Graphics2D g2 = (Graphics2D)g;
                 g2.setStroke(new BasicStroke(3));
                 g2.drawRect(0, 0, controlPanel.getWidth(), controlPanel.getHeight());
+
+                if (time == 0) {
+                    return;
+                } else {
+                    //double currTime = System.currentTimeMillis();
+                    if (System.currentTimeMillis() % 1000 == 0) {
+                        time--; timer.setText("Time: " + time);
+                        controlPanel.repaint();
+                    }
+                }
             }
         };
         controlPanel.setPreferredSize(new Dimension(250, mainPanel.getHeight()));
-        
+
         nameTop = new JLabel("Whack", SwingConstants.CENTER);
         nameTop.setFont(new Font("Comic Sans", Font.PLAIN, 30));
-        
+
         nameMid = new JLabel("-A-", SwingConstants.CENTER);
         nameMid.setFont(new Font("Comic Sans", Font.PLAIN, 30));
-        
+
         nameBot = new JLabel("Mole!", SwingConstants.CENTER);
         nameBot.setFont(new Font("Comic Sans", Font.PLAIN, 30));
-        
+
         namePanel = new JPanel(new BorderLayout());
         namePanel.add(nameTop, BorderLayout.NORTH);
         namePanel.add(nameMid, BorderLayout.CENTER);
         namePanel.add(nameBot, BorderLayout.SOUTH);
-        
+
         timer = new JLabel("Time: " + time, SwingConstants.CENTER);
         timer.setFont(new Font("Comic Sans", Font.PLAIN, 20));
-        
+
         playerScore = new JLabel("Score: " + score, SwingConstants.CENTER);
         playerScore.setFont(new Font("Comic Sans", Font.PLAIN, 20));
-        
+
         hiScore = new JLabel("Hi-Score: " + hiscore, SwingConstants.CENTER);
         hiScore.setFont(new Font("Comic Sans", Font.PLAIN, 20));
-        
+
         numbersPanel = new JPanel(new BorderLayout());
         numbersPanel.add(timer, BorderLayout.NORTH);
         numbersPanel.add(playerScore, BorderLayout.CENTER);
         numbersPanel.add(hiScore, BorderLayout.SOUTH);
-        
-        
+
         speedSlider = new JSlider(0, 2);
         //speedSlider.addChangeListener(this);
-        
+
         startButton = new JButton("START");
-        startButton.addActionListener(new ActionListener() {
-                @Override public void actionPerformed(ActionEvent e) {
-                    JButton button = (JButton)e.getSource();
-                    if (e.getSource().equals("START")) {
-                        start = true;
-                        start();
-                    }
-                }
-            });
-        
+        // startButton.addActionListener(new ActionListener() {
+        // @Override public void actionPerformed(ActionEvent e) {
+        // JButton button = (JButton)e.getSource();
+        // String str = button.getText();
+        // if (str.equals("START")) {
+        // start = true;
+        // start();
+
+        // }
+        // }
+        // });
+
         actionPanel = new JPanel(new BorderLayout());
         actionPanel.add(speedSlider, BorderLayout.NORTH);
         actionPanel.add(startButton, BorderLayout.SOUTH);
-        
+
         controlPanel.add(namePanel, BorderLayout.NORTH);
         controlPanel.add(numbersPanel, BorderLayout.CENTER);
         controlPanel.add(actionPanel, BorderLayout.SOUTH);
 
         gamePanel.addMouseListener(this);
-        
+
         mainPanel.add(gamePanel, BorderLayout.CENTER);
         mainPanel.add(controlPanel, BorderLayout.EAST);
-        
+
         frame.add(mainPanel);
         frame.pack();
         frame.setVisible(true);
@@ -179,6 +191,10 @@ public class Whack_A_Mole extends MouseAdapter implements Runnable {
                     if ((p.x >= m.getX() && p.x <= m.getX() + 75) 
                     && (p.y >= m.getY() && p.y <= m.getY() + 175)) {
                         m.setBonked(true);
+                        score++; playerScore.setText("Score: " + score);
+                        if (score > hiscore) {
+                            hiscore++; hiScore.setText("Hi-Score: " + hiscore);
+                        }
                     }
                 }
             }
@@ -198,10 +214,12 @@ public class Whack_A_Mole extends MouseAdapter implements Runnable {
         Mole mole3 = new Mole( 35, 600, mainPanel); moles.add(mole3);
         Mole mole4 = new Mole(205, 600, mainPanel); moles.add(mole4);
         Mole mole5 = new Mole(375, 600, mainPanel); moles.add(mole5);
-        
+
         for (Mole m : moles) {
             m.start();
         }
+
+        //timeLeft.start();
     }
 
     public static void main(String[] args) {       
