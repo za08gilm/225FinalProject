@@ -22,26 +22,25 @@ public class Whack_A_Mole extends MouseAdapter implements Runnable {
     private Color gameFront = new Color(0, 255, 0);
     private Color dirt = new Color(80, 50, 20);
 
-    private JPanel gamePanel, controlPanel, numbersPanel, actionPanel, mainPanel;
+    private JPanel gamePanel, controlPanel, namePanel, numbersPanel, actionPanel, mainPanel;
     protected java.util.List<Mole> moles = new java.util.ArrayList<Mole>();
+    private JButton start;
     private JSlider speedSlider;
     private JButton startButton;
-    private int hiscore = 10;
     protected Point p;
-
-    protected static boolean isWithinMole = false;
+    private int time = 60, score = 0, hiscore = 10;
+    private JLabel nameTop, nameMid, nameBot, timer, playerScore, hiScore;
 
     @Override public void run() {
         JFrame.setDefaultLookAndFeelDecorated(true);
 
         JFrame frame = new JFrame("Whack A Mole!");
-        frame.setPreferredSize(new Dimension(500, 750));
+        frame.setPreferredSize(new Dimension(750, 750));
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        //mainPanel = new JPanel();
-        //controlPanel = new JPanel();
-
+        mainPanel = new JPanel(new BorderLayout());
+        
         start();
 
         gamePanel = new JPanel() {
@@ -97,17 +96,78 @@ public class Whack_A_Mole extends MouseAdapter implements Runnable {
                 redraw(g);
             }
         };
-
-        //mainPanel.add(controlPanel);
-        //mainPanel.add(gamePanel);
+        
+        controlPanel = new JPanel(new BorderLayout()) {
+            @Override public void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2 = (Graphics2D)g;
+                g2.setStroke(new BasicStroke(3));
+                g2.drawRect(0, 0, controlPanel.getWidth(), controlPanel.getHeight());
+            }
+        };
+        controlPanel.setPreferredSize(new Dimension(250, mainPanel.getHeight()));
+        
+        nameTop = new JLabel("Whack", SwingConstants.CENTER);
+        nameTop.setFont(new Font("Comic Sans", Font.PLAIN, 30));
+        
+        nameMid = new JLabel("-A-", SwingConstants.CENTER);
+        nameMid.setFont(new Font("Comic Sans", Font.PLAIN, 30));
+        
+        nameBot = new JLabel("Mole!", SwingConstants.CENTER);
+        nameBot.setFont(new Font("Comic Sans", Font.PLAIN, 30));
+        
+        namePanel = new JPanel(new BorderLayout());
+        namePanel.add(nameTop, BorderLayout.NORTH);
+        namePanel.add(nameMid, BorderLayout.CENTER);
+        namePanel.add(nameBot, BorderLayout.SOUTH);
+        
+        timer = new JLabel("Time: " + time, SwingConstants.CENTER);
+        timer.setFont(new Font("Comic Sans", Font.PLAIN, 20));
+        
+        playerScore = new JLabel("Score: " + score, SwingConstants.CENTER);
+        playerScore.setFont(new Font("Comic Sans", Font.PLAIN, 20));
+        
+        hiScore = new JLabel("Hi-Score: " + hiscore, SwingConstants.CENTER);
+        hiScore.setFont(new Font("Comic Sans", Font.PLAIN, 20));
+        
+        numbersPanel = new JPanel(new BorderLayout());
+        numbersPanel.add(timer, BorderLayout.NORTH);
+        numbersPanel.add(playerScore, BorderLayout.CENTER);
+        numbersPanel.add(hiScore, BorderLayout.SOUTH);
+        
+        
+        speedSlider = new JSlider(0, 2);
+        //speedSlider.addChangeListener(this);
+        
+        start = new JButton("START");
+        // start.addActionListener(new ActionListener() {
+                // @Override public void actionPerformed(ActionEvent e) {
+                    // JButton button = (JButton)e.getSource();
+                    // if (e.getSource().equals("START")) {
+                        // start();
+                    // }
+                // }
+            // });
+        
+        actionPanel = new JPanel(new BorderLayout());
+        actionPanel.add(speedSlider, BorderLayout.NORTH);
+        actionPanel.add(start, BorderLayout.SOUTH);
+        
+        controlPanel.add(namePanel, BorderLayout.NORTH);
+        controlPanel.add(numbersPanel, BorderLayout.CENTER);
+        controlPanel.add(actionPanel, BorderLayout.SOUTH);
 
         gamePanel.addMouseListener(this);
-        frame.add(gamePanel);
+        
+        mainPanel.add(gamePanel, BorderLayout.CENTER);
+        mainPanel.add(controlPanel, BorderLayout.EAST);
+        
+        frame.add(mainPanel);
         frame.pack();
         frame.setVisible(true);
     }
 
-    @Override public void mouseClicked(MouseEvent e) { 
+    @Override public void mousePressed(MouseEvent e) { 
         // Checks if mouse is clicked over a visible mole
         if (e.getButton() == MouseEvent.BUTTON1) {
             p = e.getPoint();
@@ -132,9 +192,6 @@ public class Whack_A_Mole extends MouseAdapter implements Runnable {
     }
 
     public void start() {
-        // Final product will construct 5 moles at diff. locations.
-        // (Look at WhackAMoleReference)
-        
         Mole mole1 = new Mole(115, 500, mainPanel); moles.add(mole1);
         Mole mole2 = new Mole(300, 500, mainPanel); moles.add(mole2);
         Mole mole3 = new Mole( 35, 600, mainPanel); moles.add(mole3);
