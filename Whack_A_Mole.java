@@ -24,12 +24,12 @@ public class Whack_A_Mole extends MouseAdapter implements Runnable {
 
     private JPanel gamePanel, controlPanel, namePanel, numbersPanel, actionPanel, mainPanel;
     protected java.util.List<Mole> moles = new java.util.ArrayList<Mole>();
-    private JButton start;
     private JSlider speedSlider;
     private JButton startButton;
     protected Point p;
     private int time = 60, score = 0, hiscore = 10;
     private JLabel nameTop, nameMid, nameBot, timer, playerScore, hiScore;
+    private boolean start;
 
     @Override public void run() {
         JFrame.setDefaultLookAndFeelDecorated(true);
@@ -139,19 +139,20 @@ public class Whack_A_Mole extends MouseAdapter implements Runnable {
         speedSlider = new JSlider(0, 2);
         //speedSlider.addChangeListener(this);
         
-        start = new JButton("START");
-        // start.addActionListener(new ActionListener() {
-                // @Override public void actionPerformed(ActionEvent e) {
-                    // JButton button = (JButton)e.getSource();
-                    // if (e.getSource().equals("START")) {
-                        // start();
-                    // }
-                // }
-            // });
+        startButton = new JButton("START");
+        startButton.addActionListener(new ActionListener() {
+                @Override public void actionPerformed(ActionEvent e) {
+                    JButton button = (JButton)e.getSource();
+                    if (e.getSource().equals("START")) {
+                        start = true;
+                        start();
+                    }
+                }
+            });
         
         actionPanel = new JPanel(new BorderLayout());
         actionPanel.add(speedSlider, BorderLayout.NORTH);
-        actionPanel.add(start, BorderLayout.SOUTH);
+        actionPanel.add(startButton, BorderLayout.SOUTH);
         
         controlPanel.add(namePanel, BorderLayout.NORTH);
         controlPanel.add(numbersPanel, BorderLayout.CENTER);
