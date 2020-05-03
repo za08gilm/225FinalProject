@@ -12,7 +12,7 @@ import javax.swing.event.*;
 public class Mole extends Thread {
 
     public static final int DELAY_TIME = 33; // Delay time between animations.
-    public static final int ABOVE_TIME = 2000; // Time spent above hole.
+    //public static final int ABOVE_TIME = 2000; // Time spent above hole.
     public static final int MOLE = 75; // Size of the mole
     protected boolean isRunning = true;
 
@@ -25,12 +25,14 @@ public class Mole extends Thread {
     protected JComponent container;
     protected Graphics graphic;
     protected MouseEvent e;
+    protected int timeUp;
 
     public Mole(int x, int y, JComponent container) {
         this.x = x; 
         this.y = y; 
         bonked = false;
         isUp = false;
+        timeUp = Whack_A_Mole.FAST;
         this.container = container;
     }
 
@@ -58,7 +60,7 @@ public class Mole extends Thread {
 
         isUp = true;
         try {
-            sleep(ABOVE_TIME);
+            sleep(timeUp);
         } catch (InterruptedException e) {}
         isUp = false;
 
@@ -141,5 +143,9 @@ public class Mole extends Thread {
 
     public boolean isUp() {
         return isUp;
+    }
+    
+    public void setTimeUp(int time) {
+        timeUp = time;
     }
 }

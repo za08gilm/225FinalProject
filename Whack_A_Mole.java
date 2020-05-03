@@ -21,16 +21,22 @@ public class Whack_A_Mole extends MouseAdapter implements Runnable {
     private Color gameMid = new Color(0, 175, 0);
     private Color gameFront = new Color(0, 255, 0);
     private Color dirt = new Color(80, 50, 20);
+    
+    protected static final int SLOW = 2000;
+    protected static final int REGULAR = 1000;
+    protected static final int FAST = 500;
 
     private JPanel gamePanel, controlPanel, namePanel, numbersPanel, actionPanel, mainPanel;
     protected java.util.List<Mole> moles = new java.util.ArrayList<Mole>();
     private JSlider speedSlider;
     private JButton startButton;
     protected Point p;
-    private long time = 60;
+    private int time = 60;
     private int score = 0, hiscore = 10;
-    private JLabel nameTop, nameMid, nameBot, timer, playerScore, hiScore;
+    private JLabel nameTop, nameMid, nameBot, timeLeft, playerScore, hiScore;
     private boolean start = false;
+    private java.util.Timer countdown;
+    
 
     @Override public void run() {
         JFrame.setDefaultLookAndFeelDecorated(true);
@@ -105,15 +111,14 @@ public class Whack_A_Mole extends MouseAdapter implements Runnable {
                 g2.setStroke(new BasicStroke(3));
                 g2.drawRect(0, 0, controlPanel.getWidth(), controlPanel.getHeight());
 
-                if (time == 0) {
-                    return;
-                } else {
-                    //double currTime = System.currentTimeMillis();
-                    if (System.currentTimeMillis() % 1000 == 0) {
-                        time--; timer.setText("Time: " + time);
-                        controlPanel.repaint();
+                countdown = new java.util.Timer();
+                countdown.schedule(new TimerTask() {
+                    @Override public void run() {
+                        time--; timeLeft.setText("Time: " + time);
+                        //controlPanel.repaint();
                     }
-                }
+                }, 1000, 1000);
+                
             }
         };
         controlPanel.setPreferredSize(new Dimension(250, mainPanel.getHeight()));
@@ -132,8 +137,8 @@ public class Whack_A_Mole extends MouseAdapter implements Runnable {
         namePanel.add(nameMid, BorderLayout.CENTER);
         namePanel.add(nameBot, BorderLayout.SOUTH);
 
-        timer = new JLabel("Time: " + time, SwingConstants.CENTER);
-        timer.setFont(new Font("Comic Sans", Font.PLAIN, 20));
+        timeLeft = new JLabel("Time: " + time, SwingConstants.CENTER);
+        timeLeft.setFont(new Font("Comic Sans", Font.PLAIN, 20));
 
         playerScore = new JLabel("Score: " + score, SwingConstants.CENTER);
         playerScore.setFont(new Font("Comic Sans", Font.PLAIN, 20));
@@ -142,7 +147,7 @@ public class Whack_A_Mole extends MouseAdapter implements Runnable {
         hiScore.setFont(new Font("Comic Sans", Font.PLAIN, 20));
 
         numbersPanel = new JPanel(new BorderLayout());
-        numbersPanel.add(timer, BorderLayout.NORTH);
+        numbersPanel.add(timeLeft, BorderLayout.NORTH);
         numbersPanel.add(playerScore, BorderLayout.CENTER);
         numbersPanel.add(hiScore, BorderLayout.SOUTH);
 
