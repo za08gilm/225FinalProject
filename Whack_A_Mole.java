@@ -31,37 +31,38 @@ public class Whack_A_Mole extends MouseAdapter implements Runnable {
     private JSlider speedSlider;
     private JButton startButton;
     protected Point p;
-    private int time = 120;
-    private int score = 0, hiscore = 10;
+    private int time = 120, score = 0, hiscore = 25;
     private JLabel nameTop, nameMid, nameBot, timeLeft, playerScore, hiScore;
     private static boolean start = false, gameover = false;
     private java.util.Timer countdown;
-    private long startTime;
 
     @Override public void run() {
         JFrame.setDefaultLookAndFeelDecorated(true);
-
         JFrame frame = new JFrame("Whack A Mole!");
         frame.setPreferredSize(new Dimension(750, 750));
-
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         mainPanel = new JPanel(new BorderLayout());
 
         start();
-        startTime = System.currentTimeMillis();
 
         gamePanel = new JPanel() {
             @Override public void paintComponent(Graphics g) {
                 super.paintComponent(g);
 
-                if (gameover) {
+                if (gameover) { // If the game is over.
                     JFrame gameOverFrame = new JFrame();
-                    JOptionPane.showMessageDialog(gameOverFrame, "Game Over.");
+                    if (score == hiscore) {
+                        JOptionPane.showMessageDialog(gameOverFrame, "Congratulations. New Hi-Score!");
+                    } else {
+                        JOptionPane.showMessageDialog(gameOverFrame, "Game Over. Better Luck Next Time.");
+                    }
                     gameover = false;
                     gamePanel.repaint();
                     System.exit(0);
-                } else {
+                    
+                } else { // If the game is not over.
+                     
                     try {
                         g.drawImage(ImageIO.read(new File("sky.jpg")), 0, 0, null);
                     } catch (Exception e) {}
@@ -113,7 +114,6 @@ public class Whack_A_Mole extends MouseAdapter implements Runnable {
                     gamePanel.setCursor(c);
 
                     redraw(g);
-
                 }
             }
         };
@@ -222,11 +222,6 @@ public class Whack_A_Mole extends MouseAdapter implements Runnable {
         frame.add(mainPanel);
         frame.pack();
         frame.setVisible(true);
-
-        // if (gameover) {
-        // JFrame gameOverFrame = new JFrame();
-        // JOptionPane.showMessageDialog(gameOverFrame, "Game Over.");
-        // }
     }
 
     @Override public void mousePressed(MouseEvent e) { 
@@ -248,7 +243,7 @@ public class Whack_A_Mole extends MouseAdapter implements Runnable {
                 }
             }
         }
-        p = null;
+        p = null; // Reset the point.
     }
 
     public void redraw(Graphics g) {
@@ -267,9 +262,6 @@ public class Whack_A_Mole extends MouseAdapter implements Runnable {
         for (Mole m : moles) {
             m.start();
         }
-
-        // time = 120; 
-        // score = 0; 
     }
 
     public static void main(String[] args) {       

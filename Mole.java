@@ -89,7 +89,9 @@ public class Mole extends Thread {
     }
 
     /**
+    Redraws the Mole based on if has been clicked on or not.
     
+    @param Graphics g The graphic instrument used to draw the Mole.
      */
     public void paintMole(Graphics g) {
         if (!bonked) { // Paint a mole that was not hit.
@@ -147,22 +149,51 @@ public class Mole extends Thread {
         }
     }
 
+    /**
+    Used to change the boolean when the Mole was clicked on or reset.
+    
+    @param b The boolean to replace the current boolean of the bonked 
+    variable.
+     */
     public void setBonked(boolean b) {
         bonked = b;
     }
 
+    /**
+    Returns the x-coordinate of the Mole.
+    
+    @retrun The x-coordinate of the Mole.
+     */
     public int getX() {
         return x;
     }
 
+    /**
+    Returns the y-coordinate of the Mole.
+    
+    @retrun The y-coordinate of the Mole.
+     */
     public int getY() {
         return y;
     }
 
+    /**
+    Checks whether or not the Mole is completely up.
+    
+    @return true if the Mole is completely up, false 
+    otherwise.
+     */
     public boolean isUp() {
         return isUp;
     }
     
+    /**
+    Sets the amount of time the Mole is up for before
+    going down.
+    
+    @param time The new amount of time the Mole will stay up
+    for.
+     */
     public void setTimeUp(int time) {
         timeUp = time;
     }
