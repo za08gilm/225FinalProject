@@ -4,52 +4,65 @@ import java.util.*;
 import javax.swing.*;
 import javax.swing.event.*;
 /**
- * Write a description of class Mole here.
- *
- * @author Zack, Mark, Roeldi, Colin, Patrick
- * @version Spring 2020
+Creates a Mole object that will randomly appear that can be clicked on.
+
+@author Zack Gilman, Mark Smith, Roeldi Staro, Colin Palladino, Patrick Baumgardner
+@version Spring 2020
  */
 public class Mole extends Thread {
 
+    /** Static variables. */
     public static final int DELAY_TIME = 33; // Delay time between animations.
-    //public static final int ABOVE_TIME = 2000; // Time spent above hole.
     public static final int MOLE = 75; // Size of the mole
-    protected boolean isRunning = true;
-
+    
+    /** Instance variables. */
+    protected boolean isRunning = true; // Is the mole running?
     protected boolean bonked; // Was mole hit?
-    protected boolean moveUp; // Mole move up (may remove)
-    protected boolean moveDown; // Mole move down (may remove)
-    protected boolean isUp;
+    protected boolean isUp; // Is the mole completely up?
     protected int x, y; // Coordinates where the mole will be drawn.
+    protected JComponent container; // Panel mole will be drawn on.
+    protected int timeUp; // How long the mole is above ground for.
 
-    protected JComponent container;
-    protected Graphics graphic;
-    protected MouseEvent e;
-    protected int timeUp;
-
+    /**
+    Constructs a new Mole object that is not hit(bonked), not on the surface,
+    and with a set starting speed.
+    
+    @param x The x-coordinate where the Mole will be drawn.
+    @param y The y-coordinate where the Mole will be drawn.
+    @param container The panel where the Mole will be drawn.
+     */
     public Mole(int x, int y, JComponent container) {
         this.x = x; 
         this.y = y; 
         bonked = false;
         isUp = false;
-        timeUp = Whack_A_Mole.FAST;
+        timeUp = Whack_A_Mole.REGULAR;
         this.container = container;
     }
 
+    /**
+    Allows the Mole to translate up and down.
+     */
     public void run() {
         while (isRunning) {
             moveMole();
         }
     }
 
+    /**
+    Draws the Mole moving up and down, and redraws the Mole
+    based on whether it has been clicked on or not.
+     */
     public void moveMole() {
         Random rand = new Random();
+        // How long the mole will wait before popping up.
         int waitTime = rand.nextInt(7500) + 1000;
 
         try {
             sleep(waitTime);
         } catch (InterruptedException e) {}
 
+        // Will move up for approximately 500ms.
         for (int i = 0; i < 16; i++) {
             try {
                 sleep(DELAY_TIME);
@@ -58,12 +71,13 @@ public class Mole extends Thread {
             y = y - 10;
         }
 
-        isUp = true;
-        try {
+        isUp = true; // Mole can be clicked on.
+        try { // Stay up for amount of time based on JSlider in Whack_A_Mole class.
             sleep(timeUp);
         } catch (InterruptedException e) {}
-        isUp = false;
+        isUp = false; // Mole cannit be clicked on anymore.
 
+        // Will move down for approximately 500ms.
         for (int i = 0; i < 16; i++) {
             try {
                 sleep(DELAY_TIME);
@@ -71,12 +85,15 @@ public class Mole extends Thread {
 
             y = y + 10;
         }
-        bonked = false;
+        bonked = false; // Redraws Mole if it was clicked on while up.
     }
 
+    /**
+    
+     */
     public void paintMole(Graphics g) {
-        if (!bonked) {
-            // Paint a mole that was not hit.
+        if (!bonked) { // Paint a mole that was not hit.
+          
             // Body
             g.setColor(new Color(160, 82, 45));
             g.fillOval(x, y, MOLE, MOLE + 100); // Change x&y later
@@ -99,8 +116,9 @@ public class Mole extends Thread {
             g.fillOval(x + 20, y + 50, MOLE / 2, MOLE / 3);
             g.setColor(Color.BLACK);
             g.drawOval(x + 20, y + 50, MOLE / 2, MOLE / 3);
-        } else {
-            // Show that mole was hit (X's for eyes)
+            
+        } else { // Paint a mole that was hit.
+
             // Body
             g.setColor(new Color(160, 82, 45));
             g.fillOval(x, y, MOLE, MOLE + 100); // Change x&y later
@@ -124,9 +142,9 @@ public class Mole extends Thread {
             g2.drawLine(x + 50, y + 30, x + 60, y + 40);                
             g2.drawLine(x + 50, y + 40, x + 60, y + 30);
 
+            // Reset the stroke.
             g2.setStroke(new BasicStroke(1));
         }
-        //container.repaint();
     }
 
     public void setBonked(boolean b) {
