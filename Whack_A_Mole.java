@@ -22,8 +22,8 @@ public class Whack_A_Mole extends MouseAdapter implements Runnable {
     private Color gameFront = new Color(0, 255, 0);
     private Color dirt = new Color(80, 50, 20);
     
-    protected static final int SLOW = 2000;
-    protected static final int REGULAR = 1000;
+    protected static final int SLOW = 3000;
+    protected static final int REGULAR = 1500;
     protected static final int FAST = 500;
 
     private JPanel gamePanel, controlPanel, namePanel, numbersPanel, actionPanel, mainPanel;
@@ -152,7 +152,25 @@ public class Whack_A_Mole extends MouseAdapter implements Runnable {
         numbersPanel.add(hiScore, BorderLayout.SOUTH);
 
         speedSlider = new JSlider(0, 2);
-        //speedSlider.addChangeListener(this);
+        speedSlider.addChangeListener(new ChangeListener() {
+            @Override public void stateChanged(ChangeEvent e) {
+                if (e.getSource().equals(speedSlider)) {
+                    if (speedSlider.getValue() == 0) {
+                        for (Mole m : moles) {
+                            m.setTimeUp(SLOW);
+                        }
+                    } else if (speedSlider.getValue() == 1) {
+                        for (Mole m : moles) {
+                            m.setTimeUp(REGULAR);
+                        }
+                    } else {
+                        for (Mole m : moles) {
+                            m.setTimeUp(FAST);
+                        }
+                    }
+                }
+            }
+        });
 
         startButton = new JButton("START");
         // startButton.addActionListener(new ActionListener() {
