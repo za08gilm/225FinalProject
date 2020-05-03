@@ -21,7 +21,7 @@ public class Whack_A_Mole extends MouseAdapter implements Runnable {
     private Color gameMid = new Color(0, 175, 0);
     private Color gameFront = new Color(0, 255, 0);
     private Color dirt = new Color(80, 50, 20);
-    
+
     protected static final int SLOW = 3000;
     protected static final int REGULAR = 1500;
     protected static final int FAST = 500;
@@ -31,12 +31,12 @@ public class Whack_A_Mole extends MouseAdapter implements Runnable {
     private JSlider speedSlider;
     private JButton startButton;
     protected Point p;
-    private int time = 60;
+    private int time = 120;
     private int score = 0, hiscore = 10;
     private JLabel nameTop, nameMid, nameBot, timeLeft, playerScore, hiScore;
-    private boolean start = false;
+    private static boolean start = false, gameover = false;
     private java.util.Timer countdown;
-    
+    private long startTime;
 
     @Override public void run() {
         JFrame.setDefaultLookAndFeelDecorated(true);
@@ -49,58 +49,73 @@ public class Whack_A_Mole extends MouseAdapter implements Runnable {
         mainPanel = new JPanel(new BorderLayout());
 
         start();
+        startTime = System.currentTimeMillis();
 
         gamePanel = new JPanel() {
             @Override public void paintComponent(Graphics g) {
                 super.paintComponent(g);
 
-                try {
-                    g.drawImage(ImageIO.read(new File("sky.jpg")), 0, 0, null);
-                } catch (Exception e) {}
+                if (gameover) {
+                    JFrame gameOverFrame = new JFrame();
+                    JOptionPane.showMessageDialog(gameOverFrame, "Game Over.");
+                    gameover = false;
+                    gamePanel.repaint();
+                    time = 120;
+                    score = 0;
+                } else {
+                    try {
+                        g.drawImage(ImageIO.read(new File("sky.jpg")), 0, 0, null);
+                    } catch (Exception e) {}
 
-                g.setColor(gameBack);
-                g.fillRect(0, 350, gamePanel.getWidth(), gamePanel.getHeight());                
+                    g.setColor(gameBack);
+                    g.fillRect(0, 350, gamePanel.getWidth(), gamePanel.getHeight());                
 
-                for (int j = 0; j < 2; j++) {
-                    Mole m = moles.get(j);
-                    m.paintMole(g);
+                    if (start) {
+                        for (int j = 0; j < 2; j++) {
+                            Mole m = moles.get(j);
+                            m.paintMole(g);
+                        }
+                    }
+
+                    g.setColor(gameMid);
+                    g.fillRect(0, 450, gamePanel.getWidth(), gamePanel.getHeight());
+
+                    g.setColor(dirt);
+                    g.fillOval(110, 450, 75, 35);
+                    g.fillOval(300, 450, 75, 35);
+                    g.setColor(Color.BLACK);
+                    g.fillOval(110, 450, 75, 30);
+                    g.fillOval(300, 450, 75, 30);
+                    g.setColor(dirt);
+
+                    if (start) {
+                        for (int i = 2; i < 5; i++) {
+                            Mole m = moles.get(i);
+                            m.paintMole(g);
+                        } 
+                    }
+
+                    g.setColor(gameFront);
+                    g.fillRect(0, 550, gamePanel.getWidth(), gamePanel.getHeight());
+
+                    g.setColor(dirt);
+                    g.fillOval(35, 550, 75, 35);
+                    g.fillOval(205, 550, 75, 35);
+                    g.fillOval(375, 550, 75, 35);
+                    g.setColor(Color.BLACK);
+                    g.fillOval(35, 550, 75, 30);
+                    g.fillOval(205, 550, 75, 30);
+                    g.fillOval(375, 550, 75, 30);
+
+                    Toolkit toolkit = Toolkit.getDefaultToolkit();
+                    Image image = toolkit.getImage("mallet.png");
+                    Cursor c = toolkit.createCustomCursor(image, 
+                            new Point(gamePanel.getX(), gamePanel.getY()), "img");
+                    gamePanel.setCursor(c);
+
+                    redraw(g);
+
                 }
-
-                g.setColor(gameMid);
-                g.fillRect(0, 450, gamePanel.getWidth(), gamePanel.getHeight());
-
-                g.setColor(dirt);
-                g.fillOval(110, 450, 75, 35);
-                g.fillOval(300, 450, 75, 35);
-                g.setColor(Color.BLACK);
-                g.fillOval(110, 450, 75, 30);
-                g.fillOval(300, 450, 75, 30);
-                g.setColor(dirt);
-
-                for (int i = 2; i < 5; i++) {
-                    Mole m = moles.get(i);
-                    m.paintMole(g);
-                }
-
-                g.setColor(gameFront);
-                g.fillRect(0, 550, gamePanel.getWidth(), gamePanel.getHeight());
-
-                g.setColor(dirt);
-                g.fillOval(35, 550, 75, 35);
-                g.fillOval(205, 550, 75, 35);
-                g.fillOval(375, 550, 75, 35);
-                g.setColor(Color.BLACK);
-                g.fillOval(35, 550, 75, 30);
-                g.fillOval(205, 550, 75, 30);
-                g.fillOval(375, 550, 75, 30);
-
-                Toolkit toolkit = Toolkit.getDefaultToolkit();
-                Image image = toolkit.getImage("mallet.png");
-                Cursor c = toolkit.createCustomCursor(image, 
-                        new Point(gamePanel.getX(), gamePanel.getY()), "img");
-                gamePanel.setCursor(c);
-
-                redraw(g);
             }
         };
 
@@ -113,12 +128,20 @@ public class Whack_A_Mole extends MouseAdapter implements Runnable {
 
                 countdown = new java.util.Timer();
                 countdown.schedule(new TimerTask() {
-                    @Override public void run() {
-                        time--; timeLeft.setText("Time: " + time);
-                        //controlPanel.repaint();
-                    }
-                }, 1000, 1000);
-                
+                        @Override public void run() {
+                            if (start) {
+                                if ((int)Math.ceil(time / 2) == 0) {
+                                    start = false;
+                                    gameover = true;
+                                    return;
+                                } else {
+                                    time--; 
+                                    timeLeft.setText("Time: " + (int)Math.ceil(time / 2));
+                                }
+                            }
+                        }
+                    },  1000, 1000);
+
             }
         };
         controlPanel.setPreferredSize(new Dimension(250, mainPanel.getHeight()));
@@ -137,7 +160,7 @@ public class Whack_A_Mole extends MouseAdapter implements Runnable {
         namePanel.add(nameMid, BorderLayout.CENTER);
         namePanel.add(nameBot, BorderLayout.SOUTH);
 
-        timeLeft = new JLabel("Time: " + time, SwingConstants.CENTER);
+        timeLeft = new JLabel("Time: " + (time / 2), SwingConstants.CENTER);
         timeLeft.setFont(new Font("Comic Sans", Font.PLAIN, 20));
 
         playerScore = new JLabel("Score: " + score, SwingConstants.CENTER);
@@ -153,37 +176,36 @@ public class Whack_A_Mole extends MouseAdapter implements Runnable {
 
         speedSlider = new JSlider(0, 2);
         speedSlider.addChangeListener(new ChangeListener() {
-            @Override public void stateChanged(ChangeEvent e) {
-                if (e.getSource().equals(speedSlider)) {
-                    if (speedSlider.getValue() == 0) {
-                        for (Mole m : moles) {
-                            m.setTimeUp(SLOW);
-                        }
-                    } else if (speedSlider.getValue() == 1) {
-                        for (Mole m : moles) {
-                            m.setTimeUp(REGULAR);
-                        }
-                    } else {
-                        for (Mole m : moles) {
-                            m.setTimeUp(FAST);
+                @Override public void stateChanged(ChangeEvent e) {
+                    if (e.getSource().equals(speedSlider)) {
+                        if (speedSlider.getValue() == 0) {
+                            for (Mole m : moles) {
+                                m.setTimeUp(SLOW);
+                            }
+                        } else if (speedSlider.getValue() == 1) {
+                            for (Mole m : moles) {
+                                m.setTimeUp(REGULAR);
+                            }
+                        } else {
+                            for (Mole m : moles) {
+                                m.setTimeUp(FAST);
+                            }
                         }
                     }
                 }
-            }
-        });
+            });
 
         startButton = new JButton("START");
-        // startButton.addActionListener(new ActionListener() {
-        // @Override public void actionPerformed(ActionEvent e) {
-        // JButton button = (JButton)e.getSource();
-        // String str = button.getText();
-        // if (str.equals("START")) {
-        // start = true;
-        // start();
-
-        // }
-        // }
-        // });
+        startButton.addActionListener(new ActionListener() {
+                @Override public void actionPerformed(ActionEvent e) {
+                    JButton button = (JButton)e.getSource();
+                    String str = button.getText();
+                    if (str.equals("START")) {
+                        start = true;
+                        gameover = false;
+                    }
+                }
+            });
 
         actionPanel = new JPanel(new BorderLayout());
         actionPanel.add(speedSlider, BorderLayout.NORTH);
@@ -201,6 +223,11 @@ public class Whack_A_Mole extends MouseAdapter implements Runnable {
         frame.add(mainPanel);
         frame.pack();
         frame.setVisible(true);
+
+        // if (gameover) {
+        // JFrame gameOverFrame = new JFrame();
+        // JOptionPane.showMessageDialog(gameOverFrame, "Game Over.");
+        // }
     }
 
     @Override public void mousePressed(MouseEvent e) { 
@@ -242,7 +269,8 @@ public class Whack_A_Mole extends MouseAdapter implements Runnable {
             m.start();
         }
 
-        //timeLeft.start();
+        // time = 120; 
+        // score = 0; 
     }
 
     public static void main(String[] args) {       
