@@ -448,8 +448,7 @@ public class Piano extends KeyAdapter implements Runnable, ActionListener {
     }
 
     /**
-    Method to be called when an the a selection is made in
-    the JComboBox.
+    Method to be called when a selection is made in the JComboBox.
     
     Satisfies the ActionListener interface.
     
