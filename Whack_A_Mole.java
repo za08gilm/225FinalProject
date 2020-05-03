@@ -60,8 +60,7 @@ public class Whack_A_Mole extends MouseAdapter implements Runnable {
                     JOptionPane.showMessageDialog(gameOverFrame, "Game Over.");
                     gameover = false;
                     gamePanel.repaint();
-                    time = 120;
-                    score = 0;
+                    System.exit(0);
                 } else {
                     try {
                         g.drawImage(ImageIO.read(new File("sky.jpg")), 0, 0, null);
